@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="4.6">
+        android:layout_weight="4.1">
 
     </LinearLayout>
 
@@ -53,6 +53,7 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/usuarioTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
@@ -67,6 +68,7 @@
         </EditText>
 
         <EditText
+            android:id="@+id/passwordTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
@@ -80,6 +82,20 @@
             android:background="@drawable/edit_fondo">
 
         </EditText>
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/boton_estilo"
+            app:backgroundTint="@color/darkGreen"
+            android:text="Log In"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            tools:ignore="HardcodedText">
+
+        </Button>
 
 
     </LinearLayout>
