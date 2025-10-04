@@ -10,23 +10,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="4.2">
+        android:layout_weight="4.3">
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2.5"
+        android:layout_weight="2.6"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_gravity="center"
-            android:src="@drawable/club_deportivo_logo" />
+            android:src="@drawable/club_deportivo_logo"
+            android:scaleType="centerInside"/>
 
     </LinearLayout>
 
@@ -38,7 +38,9 @@
         android:textStyle="bold"
         android:layout_marginTop="0dp"
         android:gravity="center"
-        android:textSize="22sp">
+        android:textSize="22sp"
+        tools:ignore="HardcodedText"
+        android:layout_marginBottom="70dp">
 
     </TextView>
 
@@ -46,9 +48,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2.5"
-        android:orientation="vertical"
-        android:gravity="center">
-
+        android:gravity="center"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/btnGestionUsuarios"
@@ -57,10 +58,11 @@
             android:layout_gravity="center"
             android:text="Gestión de Usuarios"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
+            android:textSize="18dp"
             android:textStyle="bold"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/boton_estilo"/>
+            android:background="@drawable/boton_estilo"
+            app:backgroundTint="@color/darkGreen"/>
 
         <Button
             android:id="@+id/btnMorososHoy"
@@ -69,12 +71,15 @@
             android:layout_gravity="center"
             android:text="Listado de morosos de hoy"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
+            android:textSize="18dp"
             android:textStyle="bold"
-            android:background="@drawable/boton_estilo"/>
+            android:background="@drawable/boton_estilo"
+            app:backgroundTint="@color/darkGreen"/>
 
 
-    </LinearLayout>
+         </LinearLayout>
+
+
 
 
 
