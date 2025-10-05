@@ -1,20 +1,29 @@
 package com.example.clubdeportivo13
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class GestionNoRegActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_gestion_no_reg)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
+        val btnVolver = findViewById<Button>(R.id.btnVolver)
+
+        btnRegistrar.setOnClickListener {
+            val intent = Intent(this, InscripcionUnoActivity::class.java)
+            startActivity(intent)
         }
+
+        btnVolver.setOnClickListener {
+            val intent = Intent(this, GestionUsuariosActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }
