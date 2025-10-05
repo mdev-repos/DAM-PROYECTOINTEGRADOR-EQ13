@@ -1,10 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="@dimen/padding_general"
     tools:context=".GestionNoRegActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="150dp"
+        android:layout_height="223dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/club_deportivo_logo" />
+
+
+    <TextView
+        android:id="@+id/tvTituloGestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="40dp"
+        android:text="GESTIÓN DE USUARIO"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="40dp" />
+
+
+    <TextView
+        android:id="@+id/tvLabelDniTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:hint="DNI [Muestra DNI ingresado usuario NO Reg]"
+        android:inputType="text"
+        tools:ignore="HardcodedText"
+        android:textColor="@color/lightGrey"
+        android:background="@drawable/edit_fondo" />
+
+
+    <TextView
+        android:id="@+id/tvMensajeEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="El DNI no está registrado"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp" />
+
+
+    <TextView
+        android:id="@+id/tvPregunta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Qué desea hacer?"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/margin_top_buttons">
+
+
+        <Button
+            android:id="@+id/btnRegistrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/boton_estilo"
+            app:backgroundTint="@color/darkGreen"
+            android:text="REGISTRAR"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="10dp"
+            tools:ignore="HardcodedText"/>
+
+
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/boton_estilo"
+            app:backgroundTint="@color/btnBlue"
+            android:text="Volver"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+</LinearLayout>
