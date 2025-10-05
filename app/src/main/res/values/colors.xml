@@ -7,5 +7,18 @@
     <color name="darkGreen">#FF3c6e71</color>
     <color name="greyBlue">#FF284b63</color>
     <color name="btnRed">#FFC43737</color>
-    <color name="btnBlue">#FF3459B7</color>
+    <color name="btnBlue">#3459B7</color>
+    <color name="verde_app">#006400</color>
+    <color name="otro_color_que_necesites">#FF5722</color>
+<!--    Paleta de colores del sistema  -->
+    <color name="gris_oscuro">#353535</color>
+    <color name="verde">#3c6e71</color>
+    <color name="blanco">#ffffff</color>
+    <color name="gris_claro">#d9d9d9</color>
+    <color name="azul">#284b63</color>
+    <color name="rojo_cancelar">#c43737</color>
+    <color name="Azul_Volver">#3459b7</color>
+
+
+
 </resources>
