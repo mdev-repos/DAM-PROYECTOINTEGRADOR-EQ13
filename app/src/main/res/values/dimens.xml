@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_general">16dp</dimen>
+    <dimen name="margin_top_text">24dp</dimen>
+    <dimen name="margin_top_buttons">32dp</dimen>
+    <dimen name="espacio_entre_botones">24dp</dimen>
+</resources>
