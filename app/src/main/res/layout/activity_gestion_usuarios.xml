@@ -15,9 +15,17 @@
         android:id="@+id/imgLogo"
         android:layout_width="150dp"
         android:layout_height="223dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50sp"
         android:src="@drawable/club_deportivo_logo" />
 
+    <TextView
+        android:id="@+id/textLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CLUB DEPORTIVO"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/tvTituloGestion"
@@ -36,21 +44,21 @@
         android:layout_height="wrap_content"
         android:text="Ingrese DNI del usuario"
         android:textColor="@color/black"
-        android:textSize="14sp"
-        android:layout_marginTop="40dp"
+        android:textSize="18sp"
+        android:layout_marginTop="130sp"
         android:textStyle="bold"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="30sp"/>
 
 
     <EditText
-        android:id="@+id/tvLabelDniTxt"
+        android:id="@+id/txtDniGestionUsuarios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
+        android:padding="8sp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:hint="DNI"
-        android:inputType="text"
+        android:inputType="number"
         tools:ignore="HardcodedText"
         android:textColor="@color/lightGrey"
         android:background="@drawable/edit_fondo">
@@ -67,7 +75,7 @@
 
 
         <Button
-            android:id="@+id/btnAceptar"
+            android:id="@+id/btnAceptarGestionUsuarios"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -76,7 +84,7 @@
             android:text="Aceptar"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="25sp"
             tools:ignore="HardcodedText"/>
 
 
