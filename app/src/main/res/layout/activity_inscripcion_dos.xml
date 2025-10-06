@@ -12,14 +12,14 @@
     <LinearLayout
         android:id="@+id/logo_layout"
         android:layout_width="match_parent"
-        android:layout_height="160sp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10sp">
+        android:layout_marginTop="35sp">
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
-            android:layout_height="140sp"
+            android:layout_height="160sp"
             android:layout_gravity="center"
             android:src="@drawable/club_deportivo_logo"
             android:scaleType="centerInside"/>
@@ -33,17 +33,16 @@
             android:layout_marginTop="0dp"
             android:gravity="center"
             android:textSize="11sp"
-            tools:ignore="HardcodedText"
-            android:layout_marginBottom="50sp"/>
+            tools:ignore="HardcodedText"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/form_layout"
         android:layout_width="match_parent"
-        android:layout_height="290sp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="30sp">
+        android:layout_marginTop="20sp">
 
         <TextView
             android:layout_width="match_parent"
@@ -54,7 +53,7 @@
             android:gravity="center"
             android:textSize="15sp"
             tools:ignore="HardcodedText"
-            android:layout_marginBottom="50sp"/>
+            android:layout_marginBottom="40sp"/>
 
         <EditText
             android:id="@+id/emailTxt"
@@ -66,7 +65,7 @@
             android:hint="Email"
             android:inputType="textEmailAddress"
             tools:ignore="HardcodedText"
-            android:textColor="@color/lightGrey"
+            android:textColor="@color/black"
             android:background="@drawable/edit_fondo"
             android:layout_marginBottom="15sp">
 
@@ -82,7 +81,7 @@
             android:hint="Telefono"
             android:inputType="phone"
             tools:ignore="HardcodedText"
-            android:textColor="@color/lightGrey"
+            android:textColor="@color/black"
             android:background="@drawable/edit_fondo"
             android:layout_marginBottom="15sp">
 
@@ -98,7 +97,7 @@
             android:hint="Telefono de contacto de urgencia"
             android:inputType="phone"
             tools:ignore="HardcodedText"
-            android:textColor="@color/lightGrey"
+            android:textColor="@color/black"
             android:background="@drawable/edit_fondo"
             android:layout_marginBottom="15sp">
 
@@ -122,13 +121,13 @@
         android:layout_height="70sp"
         android:orientation="horizontal"
         android:layout_marginTop="40sp"
-        android:layout_marginBottom="40sp"
-        android:layout_marginLeft="60sp"
-        android:layout_marginRight="60sp">
+        android:layout_marginBottom="36sp"
+        android:layout_marginLeft="50sp"
+        android:layout_marginRight="50sp">
 
         <Button
             android:id="@+id/btnSocioSelec"
-            android:layout_width="120sp"
+            android:layout_width="130sp"
             android:layout_height="match_parent"
             android:background="@drawable/boton_estilo"
             app:backgroundTint="@color/darkGreen"
@@ -139,7 +138,7 @@
 
         <Button
             android:id="@+id/btnNoSocioSelec"
-            android:layout_width="120sp"
+            android:layout_width="130sp"
             android:layout_height="match_parent"
             android:background="@drawable/boton_estilo"
             app:backgroundTint="@color/darkGreen"
@@ -164,7 +163,7 @@
             android:text="Anterior"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="20dp"
             tools:ignore="HardcodedText"/>
 
 
@@ -182,12 +181,73 @@
 
     </LinearLayout>
 
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="25sp"
+        android:layout_marginBottom="15sp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/IconButton2"
+        app:layout_constraintEnd_toEndOf="@+id/IconButton3"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="@+id/IconButton1" />
+
     <LinearLayout
         android:id="@+id/options_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
 
+
+        <ImageButton
+            android:id="@+id/IconButton1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/circular_background"
+            android:padding="12dp"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="Cerrar sesión"
+            android:src="@drawable/outline_exit_to_app_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/IconButton2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:background="@drawable/circular_background"
+            android:id="@+id/IconButton2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:layout_marginLeft="70dp"
+            android:contentDescription="Ir a la pantalla de inicio"
+            android:src="@drawable/outline_home_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/IconButton3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/IconButton1" />
+
+        <ImageButton
+            android:id="@+id/IconButton3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/circular_background"
+            android:padding="12dp"
+            android:layout_marginLeft="60dp"
+            android:contentDescription="Volver a la pantalla anterior"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/IconButton2" />
 
     </LinearLayout>
 

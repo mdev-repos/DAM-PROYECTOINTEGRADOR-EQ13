@@ -7,7 +7,6 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:padding="@dimen/padding_general"
     tools:context=".GestionNoRegActivity">
 
 
@@ -18,6 +17,16 @@
         android:layout_marginTop="40dp"
         android:src="@drawable/club_deportivo_logo" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20sp"
+        android:text="CLUB DEPORTIVO"
+        android:fontFamily="sans-serif-black"
+        android:textStyle="bold"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        tools:ignore="HardcodedText"/>
+
 
     <TextView
         android:id="@+id/tvTituloGestion"
@@ -27,7 +36,8 @@
         android:text="GESTIÓN DE USUARIO"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="70sp"/>
 
 
     <TextView
@@ -40,7 +50,7 @@
         android:hint="DNI [Muestra DNI ingresado usuario NO Reg]"
         android:inputType="text"
         tools:ignore="HardcodedText"
-        android:textColor="@color/lightGrey"
+        android:textColor="@color/black"
         android:background="@drawable/edit_fondo" />
 
 
@@ -62,7 +72,8 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="10sp"/>
 
 
     <LinearLayout
@@ -83,7 +94,7 @@
             android:text="REGISTRAR"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             tools:ignore="HardcodedText"/>
 
 
@@ -97,7 +108,77 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="5sp"
             tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="25sp"
+        android:layout_marginBottom="15sp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/IconButton2"
+        app:layout_constraintEnd_toEndOf="@+id/IconButton3"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="@+id/IconButton1" />
+
+    <LinearLayout
+        android:id="@+id/options_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
+
+
+        <ImageButton
+            android:id="@+id/IconButton1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/circular_background"
+            android:padding="12dp"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="Cerrar sesión"
+            android:src="@drawable/outline_exit_to_app_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/IconButton2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:background="@drawable/circular_background"
+            android:id="@+id/IconButton2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:layout_marginLeft="70dp"
+            android:contentDescription="Ir a la pantalla de inicio"
+            android:src="@drawable/outline_home_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/IconButton3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/IconButton1" />
+
+        <ImageButton
+            android:id="@+id/IconButton3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/circular_background"
+            android:padding="12dp"
+            android:layout_marginLeft="60dp"
+            android:contentDescription="Volver a la pantalla anterior"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/IconButton2" />
+
     </LinearLayout>
 
 </LinearLayout>
