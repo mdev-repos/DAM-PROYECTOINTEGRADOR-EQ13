@@ -62,7 +62,7 @@
             android:hint="Usuario"
             android:inputType="text"
             tools:ignore="HardcodedText"
-            android:textColor="@color/lightGrey"
+            android:textColor="@color/black"
             android:background="@drawable/edit_fondo">
 
         </EditText>
@@ -78,7 +78,7 @@
             android:hint="Contraseña"
             android:inputType="textPassword"
             tools:ignore="HardcodedText"
-            android:textColor="@color/lightGrey"
+            android:textColor="@color/black"
             android:background="@drawable/edit_fondo">
 
         </EditText>

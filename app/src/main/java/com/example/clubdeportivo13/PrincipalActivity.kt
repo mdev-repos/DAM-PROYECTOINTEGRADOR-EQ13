@@ -61,8 +61,22 @@ class PrincipalActivity : AppCompatActivity() {
         val btnVolverPantalla = findViewById<ImageButton>(R.id.IconButton3)
 
         btnVolverPantalla.setOnClickListener {
-            val intent = Intent(this, PrincipalActivity::class.java)
-            startActivity(intent)
+            AlertDialog.Builder(this)
+                .setTitle("Cerrar Sesión")
+                .setMessage("¿Estás seguro?")
+                .setPositiveButton("Sí") { dialog, which ->
+
+                    val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                    prefs.edit().putBoolean("is_logged_in", false).apply()
+
+
+                    val intent = Intent(this, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                }
+                .setNegativeButton("Cancelar", null)
+                .show()
         }
     }
 }
