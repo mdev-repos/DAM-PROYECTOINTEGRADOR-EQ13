@@ -13,12 +13,12 @@ class LoginActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
-            val btnLogin = findViewById<Button>(R.id.btnLogin)
+        val btnLogin = findViewById<Button>(R.id.btnLogin)
 
-            btnLogin.setOnClickListener {
-                val intent = Intent(this, PrincipalActivity::class.java)
-                startActivity(intent)
-            }
+        btnLogin.setOnClickListener {
+            val intent = Intent(this, PrincipalActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 }

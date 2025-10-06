@@ -1,5 +1,6 @@
 package com.example.clubdeportivo13
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
@@ -22,9 +23,7 @@ class ListadoMorososActivity : AppCompatActivity() {
 
         // Encontrar los botones por su ID
         val btnVolver = findViewById<MaterialButton>(R.id.btnVolver)
-        val iconButton1 = findViewById<ImageButton>(R.id.IconButton1)
-        val iconButton2 = findViewById<ImageButton>(R.id.IconButton2)
-        val iconButton3 = findViewById<ImageButton>(R.id.IconButton3)
+
 
         // Asignar listeners para manejar los clics
 
@@ -33,24 +32,39 @@ class ListadoMorososActivity : AppCompatActivity() {
             finish() // Cierra la actividad actual y vuelve a la anterior
         }
 
-        // Botón de Salir (Cerrar sesión)
-        iconButton1.setOnClickListener {
-            val intent = Intent(this, PrincipalActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
+        val btnCerrarSecion = findViewById<ImageButton>(R.id.IconButton1)
+
+        btnCerrarSecion.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Cerrar Sesión")
+                .setMessage("¿Estás seguro?")
+                .setPositiveButton("Sí") { dialog, which ->
+
+                    val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                    prefs.edit().putBoolean("is_logged_in", false).apply()
+
+
+                    val intent = Intent(this, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                }
+                .setNegativeButton("Cancelar", null)
+                .show()
         }
 
-        // Botón de Inicio (Home)
-        iconButton2.setOnClickListener {
+        val btnPantallaPrincipal = findViewById<ImageButton>(R.id.IconButton2)
+
+        btnPantallaPrincipal.setOnClickListener {
             val intent = Intent(this, PrincipalActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }
 
-        // Botón de Atrás
-        iconButton3.setOnClickListener {
-            finish() // Cierra la actividad actual y vuelve a la anterior
+        val btnVolverPantalla = findViewById<ImageButton>(R.id.IconButton3)
+
+        btnVolverPantalla.setOnClickListener {
+            val intent = Intent(this, PrincipalActivity::class.java)
+            startActivity(intent)
         }
     }
 }
