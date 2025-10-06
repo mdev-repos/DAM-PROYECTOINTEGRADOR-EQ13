@@ -9,16 +9,10 @@
     android:background="@color/white">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4.3">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2.6"
+        android:layout_width="220sp"
+        android:layout_height="220sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="60sp"
         android:orientation="horizontal">
 
         <ImageView
@@ -39,7 +33,7 @@
         android:textStyle="bold"
         android:layout_marginTop="0dp"
         android:gravity="center"
-        android:textSize="22sp"
+        android:textSize="15sp"
         tools:ignore="HardcodedText"
         android:layout_marginBottom="70dp">
 
@@ -47,10 +41,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2.5"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="225sp"
+        android:layout_marginBottom="20sp">
 
         <Button
             android:id="@+id/btnGestionUsuarios"
@@ -61,7 +56,7 @@
             android:textColor="@android:color/white"
             android:textSize="18dp"
             android:textStyle="bold"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/boton_estilo"
             app:backgroundTint="@color/darkGreen"/>
 
@@ -78,9 +73,76 @@
             app:backgroundTint="@color/darkGreen"/>
 
 
-         </LinearLayout>
+        </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="25sp"
+        android:layout_marginBottom="15sp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/IconButton2"
+        app:layout_constraintEnd_toEndOf="@+id/IconButton3"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="@+id/IconButton1" />
+
+    <LinearLayout
+        android:id="@+id/options_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
 
 
+        <ImageButton
+            android:id="@+id/IconButton1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/circular_background"
+            android:padding="12dp"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="Cerrar sesión"
+            android:src="@drawable/outline_exit_to_app_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/IconButton2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:background="@drawable/circular_background"
+            android:id="@+id/IconButton2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:layout_marginLeft="70dp"
+            android:contentDescription="Ir a la pantalla de inicio"
+            android:src="@drawable/outline_home_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/IconButton3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/IconButton1" />
+
+        <ImageButton
+            android:id="@+id/IconButton3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/circular_background"
+            android:padding="12dp"
+            android:layout_marginLeft="60dp"
+            android:contentDescription="Volver a la pantalla anterior"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/IconButton2" />
+
+    </LinearLayout>
 
 
 
