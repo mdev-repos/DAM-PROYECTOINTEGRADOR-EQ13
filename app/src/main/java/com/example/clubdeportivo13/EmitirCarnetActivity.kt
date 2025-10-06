@@ -21,15 +21,17 @@ class EmitirCarnetActivity : AppCompatActivity() {
         }
 
         // Encontrar los botones por su ID
-        val btnVolver = findViewById<MaterialButton>(R.id.btnVolver)
+
+        val btnPagarCuota = findViewById<ImageButton>(R.id.btnImprimir)
+        val btnCancelar = findViewById<ImageButton>(R.id.btnCancelar)
         val iconButton1 = findViewById<ImageButton>(R.id.IconButton1)
         val iconButton2 = findViewById<ImageButton>(R.id.IconButton2)
         val iconButton3 = findViewById<ImageButton>(R.id.IconButton3)
 
         // Asignar listeners para manejar los clics
 
-        // Botón Volver
-        btnVolver.setOnClickListener {
+        // Botón Cancelar
+        btnCancelar.setOnClickListener {
             finish() // Cierra la actividad actual y vuelve a la anterior
         }
 
