@@ -31,8 +31,8 @@ class GestionUsuariosActivity : AppCompatActivity() {
 
             } else if (dniIngresado.toInt() == 1) {
                 // Caso 2: Socio
-                //val intent = Intent(this, GestionSocioActivity::class.java)
-                //startActivity(intent)
+                val intent = Intent(this, GestionSocioActivity::class.java)
+                startActivity(intent)
 
             } else if(dniIngresado.toInt() == 2){
                 // Caso 3: No Socio
