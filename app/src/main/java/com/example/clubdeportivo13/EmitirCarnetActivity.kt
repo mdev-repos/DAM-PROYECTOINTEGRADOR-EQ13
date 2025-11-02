@@ -22,13 +22,19 @@ class EmitirCarnetActivity : AppCompatActivity() {
 
         // Encontrar los botones por su ID
 
-        val btnPagarCuota = findViewById<ImageButton>(R.id.btnImprimir)
+        val btnImprimir = findViewById<ImageButton>(R.id.btnImprimir)
         val btnCancelar = findViewById<ImageButton>(R.id.btnCancelar)
         val iconButton1 = findViewById<ImageButton>(R.id.IconButton1)
         val iconButton2 = findViewById<ImageButton>(R.id.IconButton2)
         val iconButton3 = findViewById<ImageButton>(R.id.IconButton3)
 
         // Asignar listeners para manejar los clics
+
+        //Boton Imprimir
+        btnImprimir.setOnClickListener {
+            // Lógica para imprimir el carnet
+        }
+
 
         // Botón Cancelar
         btnCancelar.setOnClickListener {
