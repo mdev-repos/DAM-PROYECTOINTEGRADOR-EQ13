@@ -2,7 +2,6 @@
 package com.example.clubdeportivo13
 
 import android.content.Context
-import android.util.Log
 import com.example.clubdeportivo13.DatabaseClub.PersonaEntry
 
 class ClubDataSource(context: Context) {
@@ -67,13 +66,13 @@ class ClubDataSource(context: Context) {
      */
     fun getTipoByDni(dni: Int): Int? {
         val db = dbHelper.readableDatabase
-        val columns = arrayOf(DatabaseClub.PersonaEntry.COLUMN_TIPO)
+        val columns = arrayOf(PersonaEntry.COLUMN_TIPO)
         // Usamos el DNI como criterio de selección
-        val selection = "${DatabaseClub.PersonaEntry.COLUMN_DNI} = ?"
+        val selection = "${PersonaEntry.COLUMN_DNI} = ?"
         val selectionArgs = arrayOf(dni.toString())
 
         val cursor = db.query(
-            DatabaseClub.PersonaEntry.TABLE_NAME, // Tabla
+            PersonaEntry.TABLE_NAME, // Tabla
             columns,                             // Columnas a devolver
             selection,                           // Cláusula WHERE
             selectionArgs,                       // Argumentos para la cláusula WHERE
@@ -83,7 +82,7 @@ class ClubDataSource(context: Context) {
         var tipo: Int? = null
         cursor.use {
             if (it.moveToFirst()) {
-                val tipoIndex = it.getColumnIndex(DatabaseClub.PersonaEntry.COLUMN_TIPO)
+                val tipoIndex = it.getColumnIndex(PersonaEntry.COLUMN_TIPO)
                 if (tipoIndex >= 0) {
                     // Si el DNI existe, recuperamos el valor de 'tipo' (1 o 0)
                     tipo = it.getInt(tipoIndex)

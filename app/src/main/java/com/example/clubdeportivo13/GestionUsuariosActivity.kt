@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 
 // Clave constante para pasar el DNI
 const val CLAVE_DNI_USUARIO = "dni_usuario"
@@ -109,7 +110,7 @@ class GestionUsuariosActivity : AppCompatActivity() {
                 .setMessage("¿Estás seguro?")
                 .setPositiveButton("Sí") { dialog, which ->
                     val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-                    prefs.edit().putBoolean("is_logged_in", false).apply()
+                    prefs.edit { putBoolean("is_logged_in", false) }
                     val intent = Intent(this, LoginActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
