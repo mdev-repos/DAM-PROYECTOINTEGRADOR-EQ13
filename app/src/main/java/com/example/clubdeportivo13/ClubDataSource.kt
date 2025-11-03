@@ -2,7 +2,6 @@
 package com.example.clubdeportivo13
 
 import android.content.Context
-import android.util.Log
 import com.example.clubdeportivo13.DatabaseClub.PersonaEntry
 
 class ClubDataSource(context: Context) {
@@ -58,6 +57,40 @@ class ClubDataSource(context: Context) {
         db.close()
 
         return morosos
+    }
+
+    /**
+     * Busca un DNI en la tabla PERSONA y devuelve el tipo de persona (Socio=1, NoSocio=0).
+     * @param dni El número de DNI a buscar.
+     * @return El valor 'tipo' (1 o 0) si se encuentra, o null si el DNI no existe.
+     */
+    fun getTipoByDni(dni: Int): Int? {
+        val db = dbHelper.readableDatabase
+        val columns = arrayOf(PersonaEntry.COLUMN_TIPO)
+        // Usamos el DNI como criterio de selección
+        val selection = "${PersonaEntry.COLUMN_DNI} = ?"
+        val selectionArgs = arrayOf(dni.toString())
+
+        val cursor = db.query(
+            PersonaEntry.TABLE_NAME, // Tabla
+            columns,                             // Columnas a devolver
+            selection,                           // Cláusula WHERE
+            selectionArgs,                       // Argumentos para la cláusula WHERE
+            null, null, null
+        )
+
+        var tipo: Int? = null
+        cursor.use {
+            if (it.moveToFirst()) {
+                val tipoIndex = it.getColumnIndex(PersonaEntry.COLUMN_TIPO)
+                if (tipoIndex >= 0) {
+                    // Si el DNI existe, recuperamos el valor de 'tipo' (1 o 0)
+                    tipo = it.getInt(tipoIndex)
+                }
+            }
+        }
+        db.close()
+        return tipo
     }
 
     // Aquí puedes agregar más funciones como insertarNuevoSocio, obtenerActividades, etc.

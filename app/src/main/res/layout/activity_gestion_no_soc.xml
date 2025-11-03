@@ -77,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ClubDeportivo" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvLabelDniTxt"
         android:layout_width="327dp"
         android:layout_height="40dp"
         android:layout_marginTop="60dp"
@@ -100,7 +100,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelDniTxt" />
 
     <TextView
         android:id="@+id/textView4"

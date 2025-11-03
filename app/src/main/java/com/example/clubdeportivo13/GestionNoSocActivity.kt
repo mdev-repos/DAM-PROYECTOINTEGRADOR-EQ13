@@ -3,6 +3,7 @@ package com.example.clubdeportivo13
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,6 +21,18 @@ class GestionNoSocActivity : AppCompatActivity() {
             insets
         }
 
+        val tvDniMostrar = findViewById<TextView>(R.id.tvLabelDniTxt)
+
+        // Obtener el DNI que viene del Intent
+        val dniRecibido = intent.getStringExtra(CLAVE_DNI_USUARIO)
+
+        if (dniRecibido != null) {
+            tvDniMostrar.text = dniRecibido
+            // A partir de aquí, puedes usar 'dniRecibido' en cualquier otra función
+        } else {
+            tvDniMostrar.text = "Error DNI"
+        }
+
         // Encontrar los botones por su ID
         val btnVolver = findViewById<MaterialButton>(R.id.btnVolver)
         val iconButton1 = findViewById<ImageButton>(R.id.IconButton1)
@@ -33,7 +46,6 @@ class GestionNoSocActivity : AppCompatActivity() {
             finish() // Cierra la actividad actual y vuelve a la anterior
         }
 
-        // Botón de Salir (Cerrar sesión)
         iconButton1.setOnClickListener {
             val intent = Intent(this, PrincipalActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
