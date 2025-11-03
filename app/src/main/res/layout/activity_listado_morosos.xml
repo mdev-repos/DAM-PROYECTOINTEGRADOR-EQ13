@@ -80,7 +80,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMorosos"
+        android:id="@+id/rv_morosos"
         android:layout_width="290dp"
         android:layout_height="377dp"
         android:paddingLeft="10dp"
