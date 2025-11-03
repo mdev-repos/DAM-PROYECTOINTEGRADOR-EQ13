@@ -19,7 +19,7 @@ class MorosoAdapter(private val morososList: List<PersonaMorosa>) :
         // Función para "conectar" los datos (PersonaMorosa) con la vista
         fun bind(moroso: PersonaMorosa) {
             tvNombre.text = moroso.nombreCompleto
-            tvDni.text = "DNI: ${moroso.dni}"
+            tvDni.text = "${moroso.dni}"
         }
     }
 
