@@ -30,16 +30,23 @@ class GestionNoSocActivity : AppCompatActivity() {
             tvDniMostrar.text = dniRecibido
             // A partir de aquí, puedes usar 'dniRecibido' en cualquier otra función
         } else {
-            tvDniMostrar.text = "Error DNI"
+            tvDniMostrar.text ="Error DNI"
+
         }
 
         // Encontrar los botones por su ID
+        val btnPagarAct = findViewById<MaterialButton>(R.id.btnPagarAct)
         val btnVolver = findViewById<MaterialButton>(R.id.btnVolver)
         val iconButton1 = findViewById<ImageButton>(R.id.IconButton1)
         val iconButton2 = findViewById<ImageButton>(R.id.IconButton2)
         val iconButton3 = findViewById<ImageButton>(R.id.IconButton3)
 
         // Asignar listeners para manejar los clics
+
+        btnPagarAct.setOnClickListener {
+            val intent = Intent(this, PagarActividadActivity::class.java)
+            startActivity(intent)
+        }
 
         // Botón Volver
         btnVolver.setOnClickListener {
