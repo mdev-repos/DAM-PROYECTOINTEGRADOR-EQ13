@@ -4,10 +4,19 @@ package com.example.clubdeportivo13
 import android.content.Context
 import com.example.clubdeportivo13.DatabaseClub.PersonaEntry
 
+
+data class DetalleActividad(
+    val id: Int,
+    val descripcion: String,
+    val precio: Double,
+    val fechaDisponible: String
+)
 class ClubDataSource(context: Context) {
 
     // Instancia de ClubDbHelper para gestionar la conexión y creación de la DB
     private val dbHelper: ClubDbHelper = ClubDbHelper(context)
+
+
 
     /**
      * Recupera la lista de socios que están marcados como morosos (tipo=1 AND status=1).
@@ -64,9 +73,11 @@ class ClubDataSource(context: Context) {
      * @param dni El número de DNI a buscar.
      * @return El valor 'tipo' (1 o 0) si se encuentra, o null si el DNI no existe.
      */
+
     fun getTipoByDni(dni: Int): Int? {
         val db = dbHelper.readableDatabase
         val columns = arrayOf(PersonaEntry.COLUMN_TIPO)
+
         // Usamos el DNI como criterio de selección
         val selection = "${PersonaEntry.COLUMN_DNI} = ?"
         val selectionArgs = arrayOf(dni.toString())
@@ -93,5 +104,84 @@ class ClubDataSource(context: Context) {
         return tipo
     }
 
+    // Dentro de ClubDataSource.kt
+
+    /**
+     * Obtiene una lista de todas las descripciones de actividad únicas disponibles.
+     * Útil para poblar el dropdown principal (maestro).
+     */
+    fun obtenerDescripcionesUnicas(): List<String> {
+        val db = dbHelper.readableDatabase
+        val descripciones = mutableListOf<String>()
+
+        // Usamos DISTINCT para asegurar que cada descripción aparezca solo una vez
+        val query = "SELECT DISTINCT ${DatabaseClub.ActividadesEntry.COLUMN_DESC} FROM ${DatabaseClub.ActividadesEntry.TABLE_NAME}"
+
+        val cursor = db.rawQuery(query, null)
+
+        cursor.use {
+            if (it.moveToFirst()) {
+                val descIndex = it.getColumnIndex(DatabaseClub.ActividadesEntry.COLUMN_DESC)
+                if (descIndex >= 0) {
+                    do {
+                        descripciones.add(it.getString(descIndex))
+                    } while (it.moveToNext())
+                }
+            }
+        }
+        db.close()
+        return descripciones
+    }
+
+
+    /**
+     * Busca todas las instancias de actividades (con diferentes fechas) que coincidan con la descripción.
+     * @param descripcion La descripción de la actividad seleccionada (ej: "Natación").
+     * @return Lista de objetos DetalleActividad.
+     */
+    fun obtenerDetallesActividadPorDescripcion(descripcion: String): List<DetalleActividad> {
+        val db = dbHelper.readableDatabase
+        val detalles = mutableListOf<DetalleActividad>()
+
+        val table = DatabaseClub.ActividadesEntry.TABLE_NAME
+        val colId = DatabaseClub.ActividadesEntry.COLUMN_ID
+        val colDesc = DatabaseClub.ActividadesEntry.COLUMN_DESC
+        val colPrecio = DatabaseClub.ActividadesEntry.COLUMN_PRECIO
+        val colFecha = DatabaseClub.ActividadesEntry.COLUMN_FECHA
+
+        // Query: Selecciona todos los campos de la actividad donde la descripción coincide
+        val query = "SELECT $colId, $colDesc, $colPrecio, $colFecha " +
+                "FROM $table " +
+                "WHERE $colDesc = ?"
+
+        // El 'descripcion' se pasa como argumento de selección
+        val selectionArgs = arrayOf(descripcion)
+
+        val cursor = db.rawQuery(query, selectionArgs)
+
+        cursor.use {
+            if (it.moveToFirst()) {
+                val idIndex = it.getColumnIndex(colId)
+                val descIndex = it.getColumnIndex(colDesc)
+                val precioIndex = it.getColumnIndex(colPrecio)
+                val fechaIndex = it.getColumnIndex(colFecha)
+
+                do {
+                    if (idIndex >= 0 && descIndex >= 0 && precioIndex >= 0 && fechaIndex >= 0) {
+                        detalles.add(
+                            DetalleActividad(
+                                id = it.getInt(idIndex),
+                                descripcion = it.getString(descIndex),
+                                precio = it.getDouble(precioIndex),
+                                fechaDisponible = it.getString(fechaIndex)
+                            )
+                        )
+                    }
+                } while (it.moveToNext())
+            }
+        }
+        db.close()
+        return detalles
+    }
     // Aquí puedes agregar más funciones como insertarNuevoSocio, obtenerActividades, etc.
 }

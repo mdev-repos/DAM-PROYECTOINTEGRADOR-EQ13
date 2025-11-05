@@ -216,6 +216,7 @@ object DatabaseClub {
         const val COLUMN_ACTIVIDAD_ID = "idactividad"
         const val COLUMN_SOCIO_DNI = "idsocio"
         const val COLUMN_FECHA_PAGO = "fechapago"
+        const val COLUMN_METODO_PAGO = "metodopago"
         const val COLUMN_MONTO = "montopagado"
 
         // Sentencia SQL de creación de PAGOACTIVIDADES (del script CreacionDB_TPFinal.sql)
@@ -224,6 +225,7 @@ object DatabaseClub {
                     "${COLUMN_ACTIVIDAD_ID} INTEGER NOT NULL, " +
                     "${COLUMN_SOCIO_DNI} INTEGER NOT NULL, " +
                     "${COLUMN_FECHA_PAGO} TEXT NOT NULL, " +
+                    "${COLUMN_METODO_PAGO} TEXT NOT NULL," +
                     "${COLUMN_MONTO} REAL NOT NULL, " +
                     "CONSTRAINT PAGOSACTIVIDADES_ACTIVIDADES_FK FOREIGN KEY (${COLUMN_ACTIVIDAD_ID}) REFERENCES ${ActividadesEntry.TABLE_NAME}(${ActividadesEntry.COLUMN_ID})," +
                     "CONSTRAINT PAGOSACTIVIDADES_PERSONA_FK FOREIGN KEY (${COLUMN_SOCIO_DNI}) REFERENCES ${PersonaEntry.TABLE_NAME}(${PersonaEntry.COLUMN_DNI})" +
@@ -237,15 +239,15 @@ object DatabaseClub {
         // ------------------
 
         // P2 (DNI: 22222222 - Luisa Ruiz) paga Natación (ID 1) y Padel (ID 10)
-        const val SQL_INSERT_PAGO1 = "INSERT INTO ${TABLE_NAME} (idactividad, idsocio, fechapago, montopagado) VALUES (1, 22222222, '2025-10-24', 4500.00);"
-        const val SQL_INSERT_PAGO2 = "INSERT INTO ${TABLE_NAME} (idactividad, idsocio, fechapago, montopagado) VALUES (10, 22222222, '2025-10-24', 7000.00);"
+        const val SQL_INSERT_PAGO1 = "INSERT INTO ${TABLE_NAME} (idactividad, idsocio, fechapago, metodopago, montopagado) VALUES (1, 22222222, '2025-10-24', 'Contado'. 4500.00);"
+        const val SQL_INSERT_PAGO2 = "INSERT INTO ${TABLE_NAME} (idactividad, idsocio, fechapago, metodopago, montopagado) VALUES (10, 22222222, '2025-10-24', 'Contado'. 7000.00);"
 
         // P3 (DNI: 33333333 - Carla Diaz) paga Tenis (ID 4) y Yoga (ID 7)
-        const val SQL_INSERT_PAGO3 = "INSERT INTO ${TABLE_NAME} (idactividad, idsocio, fechapago, montopagado) VALUES (4, 33333333, '2025-10-26', 6200.50);"
-        const val SQL_INSERT_PAGO4 = "INSERT INTO ${TABLE_NAME} (idactividad, idsocio, fechapago, montopagado) VALUES (7, 33333333, '2025-10-26', 3800.00);"
+        const val SQL_INSERT_PAGO3 = "INSERT INTO ${TABLE_NAME} (idactividad, idsocio, fechapago, metodopago, montopagado) VALUES (4, 33333333, '2025-10-26', 'Contado'. 6200.50);"
+        const val SQL_INSERT_PAGO4 = "INSERT INTO ${TABLE_NAME} (idactividad, idsocio, fechapago, metodopago, montopagado) VALUES (7, 33333333, '2025-10-26', 'Contado'. 3800.00);"
 
         // P5 (DNI: 55555555 - Elena Castro) paga Voleibol (ID 13) y Natación (ID 2)
-        const val SQL_INSERT_PAGO5 = "INSERT INTO ${TABLE_NAME} (idactividad, idsocio, fechapago, montopagado) VALUES (13, 55555555, '2025-10-26', 5150.00);"
-        const val SQL_INSERT_PAGO6 = "INSERT INTO ${TABLE_NAME} (idactividad, idsocio, fechapago, montopagado) VALUES (2, 55555555, '2025-10-26', 4500.00);"
+        const val SQL_INSERT_PAGO5 = "INSERT INTO ${TABLE_NAME} (idactividad, idsocio, fechapago, metodopago, montopagado) VALUES (13, 55555555, '2025-10-26', 'Contado'. 5150.00);"
+        const val SQL_INSERT_PAGO6 = "INSERT INTO ${TABLE_NAME} (idactividad, idsocio, fechapago, metodopago, montopagado) VALUES (2, 55555555, '2025-10-26', 'Contado'. 4500.00);"
     }
 }

@@ -14,14 +14,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="68dp" />
+        app:layout_constraintGuide_begin="59dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="229dp" />
+        app:layout_constraintGuide_begin="218dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -94,112 +94,148 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvLabelDniTxt"
         android:layout_width="327dp"
         android:layout_height="40dp"
         android:layout_marginTop="24dp"
-        android:gravity="start|center_vertical"
-        android:padding="6dp"
+        android:gravity="center"
+        android:padding="0dp"
         android:text="DNI"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView0" />
 
+<!--Dropdawns de actividades-->
 
-    <TextView
-        android:id="@+id/textView2"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_actividades_dropdown"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="327dp"
+
+        android:layout_height="wrap_content"
+
+        android:layout_margin="16dp"
+        android:layout_marginTop="32dp"
+
+        android:hint="Elija una Actividad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelDniTxt">
+
+        <AutoCompleteTextView
+            android:id="@+id/tv_actividades_autocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:gravity="center"
+
+            android:inputType="none"
+            android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <AutoCompleteTextView
+        android:id="@+id/tv_precioact_autocomplete"
+        android:layout_width="165dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:gravity="center"
-        android:padding="6dp"
-        android:text="Actividades Disponibles"
+        android:inputType="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView1" />
+        app:layout_constraintTop_toBottomOf="@+id/til_actividades_dropdown"/>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="142dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="24dp"
-        android:gravity="start|center_vertical"
-        android:padding="6dp"
-        android:text="Monto a Pagar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_fechadis_dropdown"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="142dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="24dp"
-        android:gravity="start|center_vertical"
-        android:padding="6dp"
-        android:text="Fechas Disponibles"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginTop="28dp"
+        android:layout_width="165dp"
+        android:hint="Fechas Disp."
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_precioact_autocomplete">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="142dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="24dp"
-        android:gravity="start|center_vertical"
-        android:padding="6dp"
-        android:text="Forma de pago"
+        <AutoCompleteTextView
+            android:id="@+id/tv_fechadis_autocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="none"
+            android:textAppearance="?attr/textAppearanceBodyLarge" />
+    </com.google.android.material.textfield.TextInputLayout>
+<!--aquí metodo de pago-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_metodopago_dropdown"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginTop="28dp"
+        android:hint="Forma de pago"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/til_fechadis_dropdown">
+
+        <AutoCompleteTextView
+            android:id="@+id/tv_metodopago_autocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:gravity="center"
+
+            android:inputType="none"
+            android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    Botones  de la parte inferior de la pantalla-->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPagarAct"
         android:layout_width="138dp"
         android:layout_height="62dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="88dp"
         android:text="PAGAR"
         app:backgroundTint="@color/darkGreen"
         app:cornerRadius="11dp"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_metodopago_dropdown" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancel"
         android:layout_width="138dp"
         android:layout_height="62dp"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="60dp"
         android:text="CANCELAR"
         app:backgroundTint="@color/btnRed"
         app:cornerRadius="11dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_metodopago_dropdown" />
 
     <View
         android:id="@+id/view"
         android:layout_width="296dp"
         android:layout_height="1dp"
-        android:layout_marginTop="176dp"
+        android:layout_marginTop="168dp"
         android:background="@android:color/black"
-        app:layout_constraintEnd_toEndOf="@+id/btnCancel"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toStartOf="@+id/btnPagarAct"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_metodopago_dropdown" />
 
     <ImageButton
         android:id="@+id/IconButton1"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/circular_background"
         android:contentDescription="Cerrar sesión"
         android:padding="12dp"
@@ -212,7 +248,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
 
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="170dp"
         android:background="@drawable/circular_background"
         android:contentDescription="Ir a la pantalla de inicio"
         android:padding="12dp"
@@ -220,13 +256,13 @@
         app:layout_constraintEnd_toStartOf="@+id/IconButton3"
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toEndOf="@+id/IconButton1"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/til_metodopago_dropdown" />
 
     <ImageButton
         android:id="@+id/IconButton3"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/circular_background"
         android:contentDescription="Volver a la pantalla anterior"
         android:padding="12dp"
