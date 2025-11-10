@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.ContentValues
 import com.example.clubdeportivo13.DatabaseClub.PersonaEntry
 import com.example.clubdeportivo13.DatabaseClub.PagoActividadesEntry
+import com.example.clubdeportivo13.DatabaseClub.CuotaEntry
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 data class DetalleActividad(
@@ -217,27 +220,77 @@ class ClubDataSource(context: Context) {
         return newRowId.toInt() > 0
     }
 
-    fun PagarCuota(
-        dniSocio: Int,
-        mes: String,
-        monto: Double,
-        fechaVencimiento: String,
-        fechaPago: String? ,// Nullable, ya que al crearla está pendiente.
-        metodoPago:String
-    ): Boolean {
-        val db = dbHelper.writableDatabase
-        val values = ContentValues().apply {
-            put(DatabaseClub.CuotaEntry.COLUMN_SOCIO_DNI, dniSocio)
-            put(DatabaseClub.CuotaEntry.COLUMN_PRECIO, monto)
-            put(DatabaseClub.CuotaEntry.COLUMN_FECHA_PAGO, fechaPago)
-            put(DatabaseClub.CuotaEntry.COLUMN_METODO_PAGO, metodoPago)
-            put(DatabaseClub.CuotaEntry.COLUMN_FECHA_VENC, fechaVencimiento)
+    /**
+     * Registra el pago de la cuota de un socio y actualiza su estado a "Al Día" (STATUS=0).
+     * @return true si el pago y la actualización del estado fueron exitosos.
+     */
+    fun pagarCuota(pago: PagoCuota): Boolean {
+        val db = dbHelper.writableDatabase // Usamos writableDatabase
+
+        // 1. REGISTRAR PAGO EN LA TABLA CUOTA
+        val valuesCuota = ContentValues().apply {
+            put(CuotaEntry.COLUMN_SOCIO_DNI, pago.idSocio)
+            put(CuotaEntry.COLUMN_FECHA_PAGO, pago.fechaPago)
+            put(CuotaEntry.COLUMN_FECHA_VENC, pago.fechaVencimiento) // <--- CORREGIDO
+            put(CuotaEntry.COLUMN_METODO_PAGO, pago.metodoPago)
+            put(CuotaEntry.COLUMN_PRECIO, pago.montoPagado)          // <--- CORREGIDO (era COLUMN_PRECIO)
         }
 
-        // Insertar la nueva fila, devolviendo el ID de la fila o -1 si hubo un error.
-        val newRowId = db.insert(DatabaseClub.CuotaEntry.TABLE_NAME, null, values)
+        val cuotaId = db.insert(CuotaEntry.TABLE_NAME, null, valuesCuota)
+
+        // 2. ACTUALIZAR ESTADO DEL SOCIO EN LA TABLA PERSONA (STATUS = 0 -> Al Día)
+        val valuesPersona = ContentValues().apply {
+            put(PersonaEntry.COLUMN_STATUS, 0) // 0 es 'Al Día'
+        }
+
+        val selection = "${PersonaEntry.COLUMN_DNI} = ?"
+        val selectionArgs = arrayOf(pago.idSocio.toString()) // <--- CORREGIDO
+
+        val rowsAffected = db.update(
+            PersonaEntry.TABLE_NAME,
+            valuesPersona,
+            selection,
+            selectionArgs
+        )
+
         db.close()
-        return newRowId != -1L
+
+        // El pago es exitoso si se insertó la cuota y se actualizó el estado del socio
+        return cuotaId != -1L && rowsAffected > 0
+    }
+
+    fun pagarCuota(dniSocio: Int, montoPagado: Double, metodoPago: String, fechaPago: String): Boolean {
+        val db = dbHelper.writableDatabase // Usamos writableDatabase
+
+        // 1. REGISTRAR PAGO EN LA TABLA CUOTA
+        val valuesCuota = ContentValues().apply {
+            put(DatabaseClub.CuotaEntry.COLUMN_SOCIO_DNI, dniSocio)
+            put(DatabaseClub.CuotaEntry.COLUMN_FECHA_PAGO, fechaPago)
+            put(DatabaseClub.CuotaEntry.COLUMN_METODO_PAGO, metodoPago)
+            put(DatabaseClub.CuotaEntry.COLUMN_PRECIO, montoPagado)
+        }
+
+        val cuotaId = db.insert(DatabaseClub.CuotaEntry.TABLE_NAME, null, valuesCuota)
+
+        // 2. ACTUALIZAR ESTADO DEL SOCIO EN LA TABLA PERSONA (STATUS = 0 -> Al Día)
+        val valuesPersona = ContentValues().apply {
+            put(DatabaseClub.PersonaEntry.COLUMN_STATUS, 0) // 0 es 'Al Día'
+        }
+
+        val selection = "${DatabaseClub.PersonaEntry.COLUMN_DNI} = ?"
+        val selectionArgs = arrayOf(dniSocio.toString())
+
+        val rowsAffected = db.update(
+            DatabaseClub.PersonaEntry.TABLE_NAME,
+            valuesPersona,
+            selection,
+            selectionArgs
+        )
+
+        db.close()
+
+        // El pago es exitoso si se insertó la cuota y se actualizó el estado del socio
+        return cuotaId != -1L && rowsAffected > 0
     }
         // Aquí puedes agregar más funciones como insertarNuevoSocio, obtenerActividades, etc.
 }

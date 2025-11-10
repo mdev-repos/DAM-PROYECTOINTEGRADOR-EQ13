@@ -11,6 +11,9 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 
 class GestionSocioActivity : AppCompatActivity() {
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -24,10 +27,11 @@ class GestionSocioActivity : AppCompatActivity() {
         val tvDniMostrar = findViewById<TextView>(R.id.tvLabelDniTxt)
 
         // Obtener el DNI que viene del Intent
-        val dniRecibido = intent.getStringExtra(CLAVE_DNI_USUARIO)
+        val dniRecibido = intent.getIntExtra(CLAVE_DNI_USUARIO, -1)
+        val dniParaPasar = dniRecibido
 
         if (dniRecibido != null) {
-            tvDniMostrar.text = dniRecibido
+            tvDniMostrar.text = dniRecibido.toString().trim()
             // A partir de aquí, puedes usar 'dniRecibido' en cualquier otra función
         } else {
             tvDniMostrar.text = "Error DNI"
@@ -35,13 +39,30 @@ class GestionSocioActivity : AppCompatActivity() {
 
         // Encontrar los botones por su ID
         val btnPagarCuota = findViewById<MaterialButton>(R.id.btnPagarAct)
-        val btnCrearCarnet = findViewById<MaterialButton>(R.id.GenCarnet)
+        val btnGenCarnet = findViewById<MaterialButton>(R.id.btnGenCarnet)
         val btnVolver = findViewById<MaterialButton>(R.id.btnVolver)
         val iconButton1 = findViewById<ImageButton>(R.id.IconButton1)
         val iconButton2 = findViewById<ImageButton>(R.id.IconButton2)
         val iconButton3 = findViewById<ImageButton>(R.id.IconButton3)
 
         // Asignar listeners para manejar los clics
+        btnPagarCuota.setOnClickListener {
+            val intent = Intent(this, PagarCuotaActivity::class.java)
+
+            // Adjuntar el DNI al Intent
+            intent.putExtra(CLAVE_DNI_USUARIO, dniParaPasar)
+
+            startActivity(intent)
+        }
+
+        btnGenCarnet.setOnClickListener {
+            val intent = Intent(this, EmitirCarnetActivity::class.java)
+
+            // Adjuntar el DNI al Intent
+            intent.putExtra(CLAVE_DNI_USUARIO, dniParaPasar)
+
+            startActivity(intent)
+        }
 
         // Botón Volver
         btnVolver.setOnClickListener {

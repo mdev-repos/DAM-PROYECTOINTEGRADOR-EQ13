@@ -132,7 +132,7 @@
         app:layout_constraintVertical_bias="0.5" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/GenCarnet"
+        android:id="@+id/btnGenCarnet"
         android:layout_width="327dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
