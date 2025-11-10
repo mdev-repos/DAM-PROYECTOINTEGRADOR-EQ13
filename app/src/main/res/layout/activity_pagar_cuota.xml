@@ -77,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ClubDeportivo" />
 
     <TextView
-        android:id="@+id/textView0"
+        android:id="@+id/txtTituloPagoCuota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -90,20 +90,20 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvLabelDniTxt"
         android:layout_width="327dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:gravity="start|center_vertical"
         android:padding="6dp"
-        android:text="DNI"
+        android:hint="DNI"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView0" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTituloPagoCuota" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_Monto"
         android:layout_width="142dp"
         android:layout_height="40dp"
         android:layout_marginTop="32dp"
@@ -113,22 +113,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelDniTxt" />
 
-    <TextView
-        android:id="@+id/textView4"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_FormaDePago_Dropdown"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="142dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginTop="20dp"
         android:gravity="start|center_vertical"
         android:padding="6dp"
-        android:text="Forma de pago"
+        android:hint="Forma de Pago"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Monto">
+        <AutoCompleteTextView
+            android:id="@+id/txDropdownMetodoPago"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:labelFor="@+id/dropdownMetodoPago" />
 
-    <com.google.android.material.button.MaterialButton
+    </com.google.android.material.textfield.TextInputLayout>
+
+       <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPagarCuota"
         android:layout_width="138dp"
         android:layout_height="62dp"
@@ -136,8 +147,8 @@
         android:text="PAGAR"
         app:backgroundTint="@color/darkGreen"
         app:cornerRadius="11dp"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintStart_toStartOf="@+id/tvLabelDniTxt"
+        app:layout_constraintTop_toBottomOf="@+id/til_FormaDePago_Dropdown" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancelar"
@@ -148,31 +159,32 @@
         android:text="CANCELAR"
         app:backgroundTint="@color/btnRed"
         app:cornerRadius="11dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="@+id/tvLabelDniTxt"
         app:layout_constraintStart_toEndOf="@+id/btnPagarCuota"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/til_FormaDePago_Dropdown" />
 
     <View
         android:id="@+id/view"
         android:layout_width="296dp"
         android:layout_height="1dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="52dp"
         android:background="@android:color/black"
-        app:layout_constraintEnd_toEndOf="@+id/btnCancelar"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/btnPagarCuota"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnPagarCuota" />
 
     <ImageButton
         android:id="@+id/IconButton1"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/circular_background"
         android:contentDescription="Cerrar sesión"
         android:padding="12dp"
         android:src="@drawable/outline_exit_to_app_24"
         app:layout_constraintStart_toStartOf="@+id/view"
-        tools:layout_editor_absoluteY="818dp" />
+        app:layout_constraintTop_toBottomOf="@+id/btnPagarCuota" />
 
     <ImageButton
         android:id="@+id/IconButton2"
@@ -186,20 +198,23 @@
         android:src="@drawable/outline_home_24"
         app:layout_constraintBottom_toBottomOf="@+id/IconButton1"
         app:layout_constraintEnd_toStartOf="@+id/IconButton3"
-        app:layout_constraintHorizontal_bias="0.028"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/IconButton1"
-        app:layout_constraintTop_toTopOf="@+id/IconButton3" />
+        app:layout_constraintTop_toTopOf="@+id/IconButton3"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/IconButton3"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="4dp"
         android:background="@drawable/circular_background"
         android:contentDescription="Volver a la pantalla anterior"
         android:padding="12dp"
         android:src="@drawable/baseline_arrow_back_24"
         app:layout_constraintEnd_toEndOf="@+id/view"
-        tools:layout_editor_absoluteY="818dp" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCancelar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

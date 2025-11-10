@@ -37,6 +37,7 @@ class GestionUsuariosActivity : AppCompatActivity() {
 
 
         btnAceptar.setOnClickListener {
+
             // 1. Obtener DNI y validar texto
             val dniTexto = txtDni.text.toString().trim()
 
@@ -50,7 +51,7 @@ class GestionUsuariosActivity : AppCompatActivity() {
             }
 
             // 2. Convertir a Int y validar número
-            val dniIngresado: Int? = dniTexto.toIntOrNull()
+            val dniIngresado = dniTexto.toIntOrNull()
 
             if (dniIngresado == null) {
                 Toast.makeText(this, "DNI contiene caracteres inválidos.", Toast.LENGTH_SHORT).show()
@@ -62,7 +63,7 @@ class GestionUsuariosActivity : AppCompatActivity() {
 
             // 4. Crear el Intent y pasar el DNI
             val intent: Intent
-            val dniParaPasar = dniTexto // Pasamos el String para mantener formato si fuera necesario
+            val dniParaPasar = dniIngresado // Pasa como INT
 
             when (tipoPersona) {
                 // Caso A: DNI NO ENCONTRADO (tipoPersona es null)

@@ -34,6 +34,8 @@ class GestionSocioActivity : AppCompatActivity() {
         }
 
         // Encontrar los botones por su ID
+        val btnPagarCuota = findViewById<MaterialButton>(R.id.btnPagarAct)
+        val btnCrearCarnet = findViewById<MaterialButton>(R.id.GenCarnet)
         val btnVolver = findViewById<MaterialButton>(R.id.btnVolver)
         val iconButton1 = findViewById<ImageButton>(R.id.IconButton1)
         val iconButton2 = findViewById<ImageButton>(R.id.IconButton2)

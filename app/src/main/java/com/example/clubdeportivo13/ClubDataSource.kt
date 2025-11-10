@@ -2,7 +2,9 @@
 package com.example.clubdeportivo13
 
 import android.content.Context
+import android.content.ContentValues
 import com.example.clubdeportivo13.DatabaseClub.PersonaEntry
+import com.example.clubdeportivo13.DatabaseClub.PagoActividadesEntry
 
 
 data class DetalleActividad(
@@ -15,7 +17,6 @@ class ClubDataSource(context: Context) {
 
     // Instancia de ClubDbHelper para gestionar la conexión y creación de la DB
     private val dbHelper: ClubDbHelper = ClubDbHelper(context)
-
 
 
     /**
@@ -115,7 +116,8 @@ class ClubDataSource(context: Context) {
         val descripciones = mutableListOf<String>()
 
         // Usamos DISTINCT para asegurar que cada descripción aparezca solo una vez
-        val query = "SELECT DISTINCT ${DatabaseClub.ActividadesEntry.COLUMN_DESC} FROM ${DatabaseClub.ActividadesEntry.TABLE_NAME}"
+        val query =
+            "SELECT DISTINCT ${DatabaseClub.ActividadesEntry.COLUMN_DESC} FROM ${DatabaseClub.ActividadesEntry.TABLE_NAME}"
 
         val cursor = db.rawQuery(query, null)
 
@@ -183,5 +185,60 @@ class ClubDataSource(context: Context) {
         db.close()
         return detalles
     }
-    // Aquí puedes agregar más funciones como insertarNuevoSocio, obtenerActividades, etc.
+
+    // Archivo: ClubDataSource.kt
+
+// ... dentro de la clase ClubDataSource(context: Context) { ...
+
+    /**
+     * Registra el pago de una actividad en la tabla PAGOACTIVIDADES.
+     * @param idActividad El ID de la actividad pagada.
+     * @param dniSocio El DNI de la persona que realiza el pago.
+     * @param montoPagado El monto total pagado.
+     * @param metodoPago El método de pago utilizado ('Contado', 'Tarjeta', etc.).
+     * @param fechaPago La fecha en formato de texto (YYYY-MM-DD).
+     * @return true si la inserción fue exitosa, false en caso contrario.
+     */
+    fun pagarActividad(pago: PagoActividad): Boolean {
+
+        val db = dbHelper.writableDatabase
+
+        // Ahora, extrae los valores directamente del objeto 'pago'
+        val values = ContentValues().apply {
+            put(PagoActividadesEntry.COLUMN_ACTIVIDAD_ID, pago.idActividad)
+            put(PagoActividadesEntry.COLUMN_SOCIO_DNI, pago.idSocio)
+            put(PagoActividadesEntry.COLUMN_FECHA_PAGO, pago.fechaPago)
+            put(PagoActividadesEntry.COLUMN_METODO_PAGO, pago.formaPago)
+            put(PagoActividadesEntry.COLUMN_MONTO, pago.montoPagado)
+        }
+
+        val newRowId = db.insert(PagoActividadesEntry.TABLE_NAME, null, values)
+        db.close()
+        return newRowId.toInt() > 0
+    }
+
+    fun PagarCuota(
+        dniSocio: Int,
+        mes: String,
+        monto: Double,
+        fechaVencimiento: String,
+        fechaPago: String? ,// Nullable, ya que al crearla está pendiente.
+        metodoPago:String
+    ): Boolean {
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put(DatabaseClub.CuotaEntry.COLUMN_SOCIO_DNI, dniSocio)
+            put(DatabaseClub.CuotaEntry.COLUMN_PRECIO, monto)
+            put(DatabaseClub.CuotaEntry.COLUMN_FECHA_PAGO, fechaPago)
+            put(DatabaseClub.CuotaEntry.COLUMN_METODO_PAGO, metodoPago)
+            put(DatabaseClub.CuotaEntry.COLUMN_FECHA_VENC, fechaVencimiento)
+        }
+
+        // Insertar la nueva fila, devolviendo el ID de la fila o -1 si hubo un error.
+        val newRowId = db.insert(DatabaseClub.CuotaEntry.TABLE_NAME, null, values)
+        db.close()
+        return newRowId != -1L
+    }
+        // Aquí puedes agregar más funciones como insertarNuevoSocio, obtenerActividades, etc.
 }
+

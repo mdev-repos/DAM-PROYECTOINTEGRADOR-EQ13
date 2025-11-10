@@ -14,6 +14,7 @@ class GestionNoSocActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContentView(R.layout.activity_gestion_no_soc)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -23,11 +24,14 @@ class GestionNoSocActivity : AppCompatActivity() {
 
         val tvDniMostrar = findViewById<TextView>(R.id.tvLabelDniTxt)
 
+
         // Obtener el DNI que viene del Intent
-        val dniRecibido = intent.getStringExtra(CLAVE_DNI_USUARIO)
+       val dniRecibido = intent.getIntExtra(CLAVE_DNI_USUARIO, -1)
+        val dniParaPasar = dniRecibido
+
 
         if (dniRecibido != null) {
-            tvDniMostrar.text = dniRecibido
+            tvDniMostrar.text = dniRecibido.toString().trim()
             // A partir de aquí, puedes usar 'dniRecibido' en cualquier otra función
         } else {
             tvDniMostrar.text ="Error DNI"
@@ -45,6 +49,10 @@ class GestionNoSocActivity : AppCompatActivity() {
 
         btnPagarAct.setOnClickListener {
             val intent = Intent(this, PagarActividadActivity::class.java)
+
+            // Adjuntar el DNI al Intent
+            intent.putExtra(CLAVE_DNI_USUARIO, dniParaPasar)
+
             startActivity(intent)
         }
 
