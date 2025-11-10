@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ClubDeportivo" />
 
     <TextView
-        android:id="@+id/textView0"
+        android:id="@+id/txtTituloPagoCuota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -104,7 +104,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView0" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTituloPagoCuota" />
 
 <!--Dropdawns de actividades-->
 
@@ -168,9 +168,11 @@
             android:inputType="none"
             android:textAppearance="?attr/textAppearanceBodyLarge" />
     </com.google.android.material.textfield.TextInputLayout>
+
 <!--aquí metodo de pago-->
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_metodopago_dropdown"
+        android:id="@+id/dropdownMetodoPago"
         style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="165dp"
         android:layout_height="wrap_content"
@@ -205,7 +207,7 @@
         app:backgroundTint="@color/darkGreen"
         app:cornerRadius="11dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_metodopago_dropdown" />
+        app:layout_constraintTop_toBottomOf="@+id/dropdownMetodoPago" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancel"
@@ -217,7 +219,7 @@
         app:backgroundTint="@color/btnRed"
         app:cornerRadius="11dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_metodopago_dropdown" />
+        app:layout_constraintTop_toBottomOf="@+id/dropdownMetodoPago" />
 
     <View
         android:id="@+id/view"
@@ -228,7 +230,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_metodopago_dropdown" />
+        app:layout_constraintTop_toBottomOf="@+id/dropdownMetodoPago" />
 
     <ImageButton
         android:id="@+id/IconButton1"
@@ -256,7 +258,7 @@
         app:layout_constraintEnd_toStartOf="@+id/IconButton3"
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toEndOf="@+id/IconButton1"
-        app:layout_constraintTop_toBottomOf="@+id/til_metodopago_dropdown" />
+        app:layout_constraintTop_toBottomOf="@+id/dropdownMetodoPago" />
 
     <ImageButton
         android:id="@+id/IconButton3"
