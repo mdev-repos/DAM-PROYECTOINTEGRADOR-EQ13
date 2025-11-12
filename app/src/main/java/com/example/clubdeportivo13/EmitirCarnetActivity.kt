@@ -22,7 +22,7 @@ class EmitirCarnetActivity : AppCompatActivity() {
     private lateinit var tvSocioDni: TextView
     private lateinit var tvSocioNombreAp: TextView
     private lateinit var tvSocioFechaInsc: TextView
-    private lateinit var tvSocioStatus: TextView
+    private lateinit var tvSocioTipo: TextView
 
     // 3. Constante para recibir el DNI
     /*companion object {
@@ -50,7 +50,7 @@ class EmitirCarnetActivity : AppCompatActivity() {
         tvSocioDni = findViewById(R.id.tvDni)
         tvSocioNombreAp = findViewById(R.id.tvNombreAp)
         tvSocioFechaInsc = findViewById(R.id.tvFechaInsc)
-        tvSocioStatus = findViewById(R.id.tvStatus)
+        tvSocioTipo = findViewById(R.id.tvSocioTipo)
 
         // --- CARGAR DATOS ---
         // CORRECCIÓN 3: Comprobar contra -1, no contra null
@@ -142,8 +142,8 @@ class EmitirCarnetActivity : AppCompatActivity() {
 
             // 4. Estado (Status) - Se mantiene la lógica que tenías
             // PEQUEÑA MEJORA: Se añade el prefijo "CATEGORIA: " para coincidir con el XML
-            val statusText = if (datos.status == 0) "Socio" else "No Socio"
-            tvSocioStatus.text = "CATEGORIA: $statusText"
+            val tipoText = if (datos.tipo == 0) "No Socio" else "Socio"
+            tvSocioTipo.text = "CATEGORIA: $tipoText"
 
         } else {
             Toast.makeText(this, "Socio con DNI $dni no encontrado.", Toast.LENGTH_LONG).show()

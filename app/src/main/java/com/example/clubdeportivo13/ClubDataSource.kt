@@ -6,9 +6,6 @@ import android.content.ContentValues
 import com.example.clubdeportivo13.DatabaseClub.PersonaEntry
 import com.example.clubdeportivo13.DatabaseClub.PagoActividadesEntry
 import com.example.clubdeportivo13.DatabaseClub.CuotaEntry
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-
 
 
 class ClubDataSource(context: Context) {
@@ -269,7 +266,7 @@ class ClubDataSource(context: Context) {
             PersonaEntry.COLUMN_NOMBRE,
             PersonaEntry.COLUMN_APELLIDO,
             PersonaEntry.COLUMN_FECHA_INSC,
-            PersonaEntry.COLUMN_STATUS
+            PersonaEntry.COLUMN_TIPO
         )
 
         val selection = "${PersonaEntry.COLUMN_DNI} = ?"
@@ -289,16 +286,16 @@ class ClubDataSource(context: Context) {
                 val nombreIndex = it.getColumnIndex(PersonaEntry.COLUMN_NOMBRE)
                 val apellidoIndex = it.getColumnIndex(PersonaEntry.COLUMN_APELLIDO)
                 val fechaInscIndex = it.getColumnIndex(PersonaEntry.COLUMN_FECHA_INSC)
-                val statusIndex = it.getColumnIndex(PersonaEntry.COLUMN_STATUS)
+                val tipoIndex = it.getColumnIndex(PersonaEntry.COLUMN_TIPO)
 
                 // Asegurar que las columnas existen y crear el objeto
-                if (nombreIndex >= 0 && apellidoIndex >= 0 && fechaInscIndex >= 0 && statusIndex >= 0) {
+                if (nombreIndex >= 0 && apellidoIndex >= 0 && fechaInscIndex >= 0 && tipoIndex >= 0) {
                     datos = DatosCarnetSocio(
                         dni = dni,
                         nombre = it.getString(nombreIndex),
                         apellido = it.getString(apellidoIndex),
                         fechaInscripcion = it.getString(fechaInscIndex),
-                        status = it.getInt(statusIndex)
+                        tipo = it.getInt(tipoIndex)
                     )
                 }
             }

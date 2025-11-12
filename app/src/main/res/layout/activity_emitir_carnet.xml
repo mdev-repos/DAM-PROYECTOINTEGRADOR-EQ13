@@ -165,7 +165,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvNombreAp" />
 
     <TextView
-        android:id="@+id/tvStatus"
+        android:id="@+id/tvSocioTipo"
         android:layout_width="173dp"
         android:layout_height="20dp"
         android:layout_marginStart="30dp"

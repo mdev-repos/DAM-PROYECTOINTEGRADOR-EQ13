@@ -29,7 +29,7 @@ data class DatosCarnetSocio(
     val nombre: String,
     val apellido: String,
     val fechaInscripcion: String,
-    val status: Int // 0: Al Día, 1: Moroso
+    val tipo: Int // 1: Socio, 0: No Socio
 )
 
 data class DetalleActividad(
