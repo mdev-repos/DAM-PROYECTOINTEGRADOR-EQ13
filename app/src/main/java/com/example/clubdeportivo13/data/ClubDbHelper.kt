@@ -1,10 +1,8 @@
-    // Archivo: ClubDbHelper.kt
-    package com.example.clubdeportivo13
+    package com.example.clubdeportivo13.data
 
     import android.content.Context
     import android.database.sqlite.SQLiteDatabase
     import android.database.sqlite.SQLiteOpenHelper
-// Se asume que DatabaseClub es un 'object' en el mismo paquete.
 
     class ClubDbHelper(context: Context) :
         SQLiteOpenHelper(
@@ -14,16 +12,14 @@
             DatabaseClub.DATABASE_VERSION // 1
         ) {
 
-        // Método llamado la PRIMERA VEZ que la base de datos es creada.
         override fun onCreate(db: SQLiteDatabase) {
 
-            // 1. CREACIÓN DE LAS TABLAS (Usando los SQL_CREATE de cada Object Entry)
             db.execSQL(DatabaseClub.PersonaEntry.SQL_CREATE_PERSONA)
             db.execSQL(DatabaseClub.ActividadesEntry.SQL_CREATE_ACTIVIDADES)
             db.execSQL(DatabaseClub.CuotaEntry.SQL_CREATE_CUOTA)
             db.execSQL(DatabaseClub.PagoActividadesEntry.SQL_CREATE_PAGOACTIVIDADES)
 
-            // 2. INSERCIÓN DE DATOS INICIALES (SEEDING)
+            // 2. INSERCIÓN DE DATOS SIMULADOS
 
             // 2.1. PERSONA (10 registros)
             db.execSQL(DatabaseClub.PersonaEntry.SQL_INSERT_P1)
@@ -73,9 +69,7 @@
             db.execSQL(DatabaseClub.PagoActividadesEntry.SQL_INSERT_PAGO6)
         }
 
-        // Método llamado cuando se incrementa DATABASE_VERSION
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-            // Borrar las tablas existentes (para recrear la DB en el desarrollo)
             db.execSQL("DROP TABLE IF EXISTS ${DatabaseClub.PagoActividadesEntry.TABLE_NAME}")
             db.execSQL("DROP TABLE IF EXISTS ${DatabaseClub.CuotaEntry.TABLE_NAME}")
             db.execSQL("DROP TABLE IF EXISTS ${DatabaseClub.ActividadesEntry.TABLE_NAME}")
@@ -83,7 +77,6 @@
             onCreate(db)
         }
 
-        // Configuración para asegurar que las Claves Foráneas se respeten
         override fun onConfigure(db: SQLiteDatabase) {
             super.onConfigure(db)
             db.setForeignKeyConstraintsEnabled(true)

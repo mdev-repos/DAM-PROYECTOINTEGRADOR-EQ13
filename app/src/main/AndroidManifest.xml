@@ -12,40 +12,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ClubDeportivo13">
         <activity
-            android:name=".PagarActividadActivity"
+            android:name=".ui.activities.PagarActividadActivity"
             android:exported="false" />
         <activity
-            android:name=".EmitirCarnetActivity"
+            android:name=".ui.activities.EmitirCarnetActivity"
             android:exported="false" />
         <activity
-            android:name=".PagarCuotaActivity"
+            android:name=".ui.activities.PagarCuotaActivity"
             android:exported="false" />
         <activity
-            android:name=".InscripcionDosActivity"
+            android:name=".ui.activities.InscripcionDosActivity"
             android:exported="false" />
         <activity
-            android:name=".InscripcionUnoActivity"
+            android:name=".ui.activities.InscripcionUnoActivity"
             android:exported="false" />
         <activity
-            android:name=".GestionNoSocActivity"
+            android:name=".ui.activities.GestionNoSocActivity"
             android:exported="false" />
         <activity
-            android:name=".GestionSocioActivity"
+            android:name=".ui.activities.GestionSocioActivity"
             android:exported="false" />
         <activity
-            android:name=".GestionNoRegActivity"
+            android:name=".ui.activities.GestionNoRegActivity"
             android:exported="false" />
         <activity
-            android:name=".GestionUsuariosActivity"
+            android:name=".ui.activities.GestionUsuariosActivity"
             android:exported="false" />
         <activity
-            android:name=".ListadoMorososActivity"
+            android:name=".ui.activities.ListadoMorososActivity"
             android:exported="false" />
         <activity
-            android:name=".PrincipalActivity"
+            android:name=".ui.activities.PrincipalActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

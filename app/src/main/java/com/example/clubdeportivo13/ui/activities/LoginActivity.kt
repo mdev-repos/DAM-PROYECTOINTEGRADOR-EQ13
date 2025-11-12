@@ -1,10 +1,11 @@
-package com.example.clubdeportivo13
+package com.example.clubdeportivo13.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.clubdeportivo13.R
 
 
 class LoginActivity : AppCompatActivity() {
@@ -19,6 +20,5 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, PrincipalActivity::class.java)
             startActivity(intent)
         }
-
     }
 }

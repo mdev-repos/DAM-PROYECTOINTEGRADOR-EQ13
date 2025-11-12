@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".InscripcionUnoActivity"
+    tools:context=".ui.activities.InscripcionUnoActivity"
     android:background="@color/white">
 
     <LinearLayout
@@ -56,7 +56,7 @@
             tools:ignore="HardcodedText"
             android:layout_marginBottom="40sp"/>
 
-        <TextView
+        <EditText
             android:id="@+id/tvLabelDniTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             android:background="@drawable/edit_fondo"
             android:layout_marginBottom="15sp">
 
-        </TextView>
+        </EditText>
 
         <EditText
             android:id="@+id/apellidoTxt"
@@ -104,21 +104,35 @@
 
         </EditText>
 
-        <EditText
-            android:id="@+id/fecNacTxt"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8sp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:hint="Fecha de nacimiento [ dd/mm/aaaa ]"
-            android:inputType="date"
-            tools:ignore="HardcodedText"
-            android:textColor="@color/black"
             android:background="@drawable/edit_fondo"
-            android:layout_marginBottom="15sp">
+            android:layout_marginBottom="15sp"
+            android:orientation="horizontal">
 
-        </EditText>
+            <TextView
+                android:id="@+id/fechaNacimientoText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fecha de nacimiento"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:paddingTop="5dp"/>
+
+            <ImageButton
+                android:id="@+id/btnFechaPicker"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:src="@android:drawable/ic_menu_my_calendar"
+                android:contentDescription="Seleccionar fecha" />
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/direccionTxt"
@@ -128,7 +142,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:hint="Direccion"
-            android:inputType="date"
+            android:inputType="text"
             tools:ignore="HardcodedText"
             android:textColor="@color/black"
             android:background="@drawable/edit_fondo">

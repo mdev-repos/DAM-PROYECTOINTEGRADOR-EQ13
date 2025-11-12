@@ -1,16 +1,14 @@
-// Archivo: ClubDataSource.kt
-package com.example.clubdeportivo13
+package com.example.clubdeportivo13.data
 
 import android.content.Context
 import android.content.ContentValues
-import com.example.clubdeportivo13.DatabaseClub.PersonaEntry
-import com.example.clubdeportivo13.DatabaseClub.PagoActividadesEntry
-import com.example.clubdeportivo13.DatabaseClub.CuotaEntry
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class ClubDataSource(context: Context) {
 
-    // Instancia de ClubDbHelper para gestionar la conexión y creación de la DB
     private val dbHelper: ClubDbHelper = ClubDbHelper(context)
 
 
@@ -21,36 +19,28 @@ class ClubDataSource(context: Context) {
     fun obtenerSociosMorosos(): List<PersonaMorosa> {
 
         val morosos = mutableListOf<PersonaMorosa>()
-        // Abrir la base de datos en modo lectura
         val db = dbHelper.readableDatabase
 
-        // Definir la consulta SELECT para filtrar socios (TIPO=1) morosos (STATUS=1)
         val SELECT_MOROSOS =
-            "SELECT ${PersonaEntry.COLUMN_DNI}, ${PersonaEntry.COLUMN_NOMBRE}, ${PersonaEntry.COLUMN_APELLIDO} " +
-                    "FROM ${PersonaEntry.TABLE_NAME} " +
-                    "WHERE ${PersonaEntry.COLUMN_TIPO} = 1 AND ${PersonaEntry.COLUMN_STATUS} = 1"
+            "SELECT ${DatabaseClub.PersonaEntry.COLUMN_DNI}, ${DatabaseClub.PersonaEntry.COLUMN_NOMBRE}, ${DatabaseClub.PersonaEntry.COLUMN_APELLIDO} " +
+                    "FROM ${DatabaseClub.PersonaEntry.TABLE_NAME} " +
+                    "WHERE ${DatabaseClub.PersonaEntry.COLUMN_TIPO} = 1 AND ${DatabaseClub.PersonaEntry.COLUMN_STATUS} = 1"
 
-        // Ejecutar la consulta. rawQuery devuelve un Cursor.
         val cursor = db.rawQuery(SELECT_MOROSOS, null)
 
-        // Usamos .use para asegurar que el Cursor se cierre correctamente al finalizar
         cursor.use {
-            // Mover el cursor a la primera posición
             if (it.moveToFirst()) {
                 do {
-                    // 1. Obtener los índices de las columnas
-                    val dniIndex = it.getColumnIndex(PersonaEntry.COLUMN_DNI)
-                    val nombreIndex = it.getColumnIndex(PersonaEntry.COLUMN_NOMBRE)
-                    val apellidoIndex = it.getColumnIndex(PersonaEntry.COLUMN_APELLIDO)
+                    val dniIndex = it.getColumnIndex(DatabaseClub.PersonaEntry.COLUMN_DNI)
+                    val nombreIndex = it.getColumnIndex(DatabaseClub.PersonaEntry.COLUMN_NOMBRE)
+                    val apellidoIndex = it.getColumnIndex(DatabaseClub.PersonaEntry.COLUMN_APELLIDO)
 
-                    // 2. Leer los valores (Comprobación de índices >= 0 para seguridad)
                     if (dniIndex >= 0 && nombreIndex >= 0 && apellidoIndex >= 0) {
 
                         val dni = it.getInt(dniIndex)
                         val nombre = it.getString(nombreIndex)
                         val apellido = it.getString(apellidoIndex)
 
-                        // 3. Crear el objeto de la Data Class
                         val nombreCompleto = "$nombre $apellido"
                         morosos.add(PersonaMorosa(dni, nombreCompleto))
                     }
@@ -58,7 +48,6 @@ class ClubDataSource(context: Context) {
             }
         }
 
-        // Es buena práctica cerrar la conexión de la DB después de la operación (aunque no es estrictamente necesario en cada llamada).
         db.close()
 
         return morosos
@@ -72,26 +61,24 @@ class ClubDataSource(context: Context) {
 
     fun getTipoByDni(dni: Int): Int? {
         val db = dbHelper.readableDatabase
-        val columns = arrayOf(PersonaEntry.COLUMN_TIPO)
+        val columns = arrayOf(DatabaseClub.PersonaEntry.COLUMN_TIPO)
 
-        // Usamos el DNI como criterio de selección
-        val selection = "${PersonaEntry.COLUMN_DNI} = ?"
+        val selection = "${DatabaseClub.PersonaEntry.COLUMN_DNI} = ?"
         val selectionArgs = arrayOf(dni.toString())
 
         val cursor = db.query(
-            PersonaEntry.TABLE_NAME, // Tabla
-            columns,                             // Columnas a devolver
-            selection,                           // Cláusula WHERE
-            selectionArgs,                       // Argumentos para la cláusula WHERE
+            DatabaseClub.PersonaEntry.TABLE_NAME,
+            columns,
+            selection,
+            selectionArgs,
             null, null, null
         )
 
         var tipo: Int? = null
         cursor.use {
             if (it.moveToFirst()) {
-                val tipoIndex = it.getColumnIndex(PersonaEntry.COLUMN_TIPO)
+                val tipoIndex = it.getColumnIndex(DatabaseClub.PersonaEntry.COLUMN_TIPO)
                 if (tipoIndex >= 0) {
-                    // Si el DNI existe, recuperamos el valor de 'tipo' (1 o 0)
                     tipo = it.getInt(tipoIndex)
                 }
             }
@@ -99,8 +86,6 @@ class ClubDataSource(context: Context) {
         db.close()
         return tipo
     }
-
-    // Dentro de ClubDataSource.kt
 
     /**
      * Obtiene una lista de todas las descripciones de actividad únicas disponibles.
@@ -110,7 +95,6 @@ class ClubDataSource(context: Context) {
         val db = dbHelper.readableDatabase
         val descripciones = mutableListOf<String>()
 
-        // Usamos DISTINCT para asegurar que cada descripción aparezca solo una vez
         val query =
             "SELECT DISTINCT ${DatabaseClub.ActividadesEntry.COLUMN_DESC} FROM ${DatabaseClub.ActividadesEntry.TABLE_NAME}"
 
@@ -146,12 +130,10 @@ class ClubDataSource(context: Context) {
         val colPrecio = DatabaseClub.ActividadesEntry.COLUMN_PRECIO
         val colFecha = DatabaseClub.ActividadesEntry.COLUMN_FECHA
 
-        // Query: Selecciona todos los campos de la actividad donde la descripción coincide
         val query = "SELECT $colId, $colDesc, $colPrecio, $colFecha " +
                 "FROM $table " +
                 "WHERE $colDesc = ?"
 
-        // El 'descripcion' se pasa como argumento de selección
         val selectionArgs = arrayOf(descripcion)
 
         val cursor = db.rawQuery(query, selectionArgs)
@@ -181,10 +163,6 @@ class ClubDataSource(context: Context) {
         return detalles
     }
 
-    // Archivo: ClubDataSource.kt
-
-// ... dentro de la clase ClubDataSource(context: Context) { ...
-
     /**
      * Registra el pago de una actividad en la tabla PAGOACTIVIDADES.
      * @param idActividad El ID de la actividad pagada.
@@ -198,16 +176,15 @@ class ClubDataSource(context: Context) {
 
         val db = dbHelper.writableDatabase
 
-        // Ahora, extrae los valores directamente del objeto 'pago'
         val values = ContentValues().apply {
-            put(PagoActividadesEntry.COLUMN_ACTIVIDAD_ID, pago.idActividad)
-            put(PagoActividadesEntry.COLUMN_SOCIO_DNI, pago.idSocio)
-            put(PagoActividadesEntry.COLUMN_FECHA_PAGO, pago.fechaPago)
-            put(PagoActividadesEntry.COLUMN_METODO_PAGO, pago.formaPago)
-            put(PagoActividadesEntry.COLUMN_MONTO, pago.montoPagado)
+            put(DatabaseClub.PagoActividadesEntry.COLUMN_ACTIVIDAD_ID, pago.idActividad)
+            put(DatabaseClub.PagoActividadesEntry.COLUMN_SOCIO_DNI, pago.idSocio)
+            put(DatabaseClub.PagoActividadesEntry.COLUMN_FECHA_PAGO, pago.fechaPago)
+            put(DatabaseClub.PagoActividadesEntry.COLUMN_METODO_PAGO, pago.formaPago)
+            put(DatabaseClub.PagoActividadesEntry.COLUMN_MONTO, pago.montoPagado)
         }
 
-        val newRowId = db.insert(PagoActividadesEntry.TABLE_NAME, null, values)
+        val newRowId = db.insert(DatabaseClub.PagoActividadesEntry.TABLE_NAME, null, values)
         db.close()
         return newRowId.toInt() > 0
     }
@@ -219,27 +196,25 @@ class ClubDataSource(context: Context) {
     fun pagarCuota(pago: PagoCuota): Boolean {
         val db = dbHelper.writableDatabase // Usamos writableDatabase
 
-        // 1. REGISTRAR PAGO EN LA TABLA CUOTA
         val valuesCuota = ContentValues().apply {
-            put(CuotaEntry.COLUMN_SOCIO_DNI, pago.idSocio)
-            put(CuotaEntry.COLUMN_FECHA_PAGO, pago.fechaPago)
-            put(CuotaEntry.COLUMN_FECHA_VENC, pago.fechaVencimiento) // <--- CORREGIDO
-            put(CuotaEntry.COLUMN_METODO_PAGO, pago.metodoPago)
-            put(CuotaEntry.COLUMN_PRECIO, pago.montoPagado)          // <--- CORREGIDO (era COLUMN_PRECIO)
+            put(DatabaseClub.CuotaEntry.COLUMN_SOCIO_DNI, pago.idSocio)
+            put(DatabaseClub.CuotaEntry.COLUMN_FECHA_PAGO, pago.fechaPago)
+            put(DatabaseClub.CuotaEntry.COLUMN_FECHA_VENC, pago.fechaVencimiento)
+            put(DatabaseClub.CuotaEntry.COLUMN_METODO_PAGO, pago.metodoPago)
+            put(DatabaseClub.CuotaEntry.COLUMN_PRECIO, pago.montoPagado)
         }
 
-        val cuotaId = db.insert(CuotaEntry.TABLE_NAME, null, valuesCuota)
+        val cuotaId = db.insert(DatabaseClub.CuotaEntry.TABLE_NAME, null, valuesCuota)
 
-        // 2. ACTUALIZAR ESTADO DEL SOCIO EN LA TABLA PERSONA (STATUS = 0 -> Al Día)
         val valuesPersona = ContentValues().apply {
-            put(PersonaEntry.COLUMN_STATUS, 0) // 0 es 'Al Día'
+            put(DatabaseClub.PersonaEntry.COLUMN_STATUS, 0) // 0 es 'Al Día'
         }
 
-        val selection = "${PersonaEntry.COLUMN_DNI} = ?"
-        val selectionArgs = arrayOf(pago.idSocio.toString()) // <--- CORREGIDO
+        val selection = "${DatabaseClub.PersonaEntry.COLUMN_DNI} = ?"
+        val selectionArgs = arrayOf(pago.idSocio.toString())
 
         val rowsAffected = db.update(
-            PersonaEntry.TABLE_NAME,
+            DatabaseClub.PersonaEntry.TABLE_NAME,
             valuesPersona,
             selection,
             selectionArgs
@@ -247,11 +222,8 @@ class ClubDataSource(context: Context) {
 
         db.close()
 
-        // El pago es exitoso si se insertó la cuota y se actualizó el estado del socio
         return cuotaId != -1L && rowsAffected > 0
     }
-
-    // Archivo: ClubDataSource.kt (Añadir dentro de la clase ClubDataSource)
 
     /**
      * Obtiene los datos esenciales de un socio para la emisión del carnet.
@@ -261,19 +233,18 @@ class ClubDataSource(context: Context) {
     fun getDatosParaCarnet(dni: Int): DatosCarnetSocio? {
         val db = dbHelper.readableDatabase
 
-        // Definir las columnas a recuperar
         val columns = arrayOf(
-            PersonaEntry.COLUMN_NOMBRE,
-            PersonaEntry.COLUMN_APELLIDO,
-            PersonaEntry.COLUMN_FECHA_INSC,
-            PersonaEntry.COLUMN_TIPO
+            DatabaseClub.PersonaEntry.COLUMN_NOMBRE,
+            DatabaseClub.PersonaEntry.COLUMN_APELLIDO,
+            DatabaseClub.PersonaEntry.COLUMN_FECHA_INSC,
+            DatabaseClub.PersonaEntry.COLUMN_TIPO
         )
 
-        val selection = "${PersonaEntry.COLUMN_DNI} = ?"
+        val selection = "${DatabaseClub.PersonaEntry.COLUMN_DNI} = ?"
         val selectionArgs = arrayOf(dni.toString())
 
         val cursor = db.query(
-            PersonaEntry.TABLE_NAME,
+            DatabaseClub.PersonaEntry.TABLE_NAME,
             columns,
             selection,
             selectionArgs,
@@ -283,12 +254,11 @@ class ClubDataSource(context: Context) {
         var datos: DatosCarnetSocio? = null
         cursor.use {
             if (it.moveToFirst()) {
-                val nombreIndex = it.getColumnIndex(PersonaEntry.COLUMN_NOMBRE)
-                val apellidoIndex = it.getColumnIndex(PersonaEntry.COLUMN_APELLIDO)
-                val fechaInscIndex = it.getColumnIndex(PersonaEntry.COLUMN_FECHA_INSC)
-                val tipoIndex = it.getColumnIndex(PersonaEntry.COLUMN_TIPO)
+                val nombreIndex = it.getColumnIndex(DatabaseClub.PersonaEntry.COLUMN_NOMBRE)
+                val apellidoIndex = it.getColumnIndex(DatabaseClub.PersonaEntry.COLUMN_APELLIDO)
+                val fechaInscIndex = it.getColumnIndex(DatabaseClub.PersonaEntry.COLUMN_FECHA_INSC)
+                val tipoIndex = it.getColumnIndex(DatabaseClub.PersonaEntry.COLUMN_TIPO)
 
-                // Asegurar que las columnas existen y crear el objeto
                 if (nombreIndex >= 0 && apellidoIndex >= 0 && fechaInscIndex >= 0 && tipoIndex >= 0) {
                     datos = DatosCarnetSocio(
                         dni = dni,
@@ -304,6 +274,31 @@ class ClubDataSource(context: Context) {
         return datos
     }
 
-        // Aquí puedes agregar más funciones como insertarNuevoSocio, obtenerActividades, etc.
+    fun insertarCliente(cliente: NuevoCliente): Boolean {
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put(DatabaseClub.PersonaEntry.COLUMN_DNI, cliente.dni)
+            put(DatabaseClub.PersonaEntry.COLUMN_APELLIDO, cliente.apellido)
+            put(DatabaseClub.PersonaEntry.COLUMN_NOMBRE, cliente.nombre)
+            put(DatabaseClub.PersonaEntry.COLUMN_FECHA_NAC, cliente.fechaNacimiento)
+            put(DatabaseClub.PersonaEntry.COLUMN_DIRECCION, cliente.direccion)
+            put(DatabaseClub.PersonaEntry.COLUMN_EMAIL, cliente.email)
+            put(DatabaseClub.PersonaEntry.COLUMN_TELEFONO, cliente.telefono)
+            put(DatabaseClub.PersonaEntry.COLUMN_CONT_URGENCIA, cliente.telefonoUrgencia)
+            put(DatabaseClub.PersonaEntry.COLUMN_FICHA_MED, cliente.fichaMedica)
+            put(DatabaseClub.PersonaEntry.COLUMN_TIPO, cliente.tipo)
+            put(DatabaseClub.PersonaEntry.COLUMN_STATUS, 0)
+            put(DatabaseClub.PersonaEntry.COLUMN_FECHA_INSC, obtenerFechaActual())
+        }
+
+        val resultado = db.insert(DatabaseClub.PersonaEntry.TABLE_NAME, null, values)
+        db.close()
+        return resultado != -1L
+    }
+
+    private fun obtenerFechaActual(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return sdf.format(Date())
+    }
 }
 

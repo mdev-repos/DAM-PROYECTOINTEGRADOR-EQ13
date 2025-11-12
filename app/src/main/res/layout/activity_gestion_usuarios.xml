@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context=".GestionUsuariosActivity">
+    tools:context=".ui.activities.GestionUsuariosActivity">
 
 
 
