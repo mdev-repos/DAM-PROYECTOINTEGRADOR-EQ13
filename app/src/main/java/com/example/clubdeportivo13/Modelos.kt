@@ -23,3 +23,18 @@ data class PagoCuota(
     val montoPagado: Double,  // montopagado
     val metodoPago: String    // metodopago
 )
+
+data class DatosCarnetSocio(
+    val dni: Int,
+    val nombre: String,
+    val apellido: String,
+    val fechaInscripcion: String,
+    val status: Int // 0: Al Día, 1: Moroso
+)
+
+data class DetalleActividad(
+    val id: Int,
+    val descripcion: String,
+    val precio: Double,
+    val fechaDisponible: String
+)

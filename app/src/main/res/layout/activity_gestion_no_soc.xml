@@ -130,7 +130,7 @@
         app:layout_constraintTop_toBottomOf="@+id/dropdownMetodoPago" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/GenCarnet"
+        android:id="@+id/btnGenCarnet"
         android:layout_width="327dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -153,7 +153,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/GenCarnet" />
+        app:layout_constraintTop_toBottomOf="@+id/btnGenCarnet" />
 
     <View
         android:id="@+id/view2"

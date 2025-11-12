@@ -10,12 +10,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 
-data class DetalleActividad(
-    val id: Int,
-    val descripcion: String,
-    val precio: Double,
-    val fechaDisponible: String
-)
+
 class ClubDataSource(context: Context) {
 
     // Instancia de ClubDbHelper para gestionar la conexión y creación de la DB
@@ -259,39 +254,59 @@ class ClubDataSource(context: Context) {
         return cuotaId != -1L && rowsAffected > 0
     }
 
-    fun pagarCuota(dniSocio: Int, montoPagado: Double, metodoPago: String, fechaPago: String): Boolean {
-        val db = dbHelper.writableDatabase // Usamos writableDatabase
+    // Archivo: ClubDataSource.kt (Añadir dentro de la clase ClubDataSource)
 
-        // 1. REGISTRAR PAGO EN LA TABLA CUOTA
-        val valuesCuota = ContentValues().apply {
-            put(DatabaseClub.CuotaEntry.COLUMN_SOCIO_DNI, dniSocio)
-            put(DatabaseClub.CuotaEntry.COLUMN_FECHA_PAGO, fechaPago)
-            put(DatabaseClub.CuotaEntry.COLUMN_METODO_PAGO, metodoPago)
-            put(DatabaseClub.CuotaEntry.COLUMN_PRECIO, montoPagado)
-        }
+    /**
+     * Obtiene los datos esenciales de un socio para la emisión del carnet.
+     * @param dni El número de DNI del socio a buscar.
+     * @return Objeto DatosCarnetSocio si se encuentra, o null.
+     */
+    fun getDatosParaCarnet(dni: Int): DatosCarnetSocio? {
+        val db = dbHelper.readableDatabase
 
-        val cuotaId = db.insert(DatabaseClub.CuotaEntry.TABLE_NAME, null, valuesCuota)
-
-        // 2. ACTUALIZAR ESTADO DEL SOCIO EN LA TABLA PERSONA (STATUS = 0 -> Al Día)
-        val valuesPersona = ContentValues().apply {
-            put(DatabaseClub.PersonaEntry.COLUMN_STATUS, 0) // 0 es 'Al Día'
-        }
-
-        val selection = "${DatabaseClub.PersonaEntry.COLUMN_DNI} = ?"
-        val selectionArgs = arrayOf(dniSocio.toString())
-
-        val rowsAffected = db.update(
-            DatabaseClub.PersonaEntry.TABLE_NAME,
-            valuesPersona,
-            selection,
-            selectionArgs
+        // Definir las columnas a recuperar
+        val columns = arrayOf(
+            PersonaEntry.COLUMN_NOMBRE,
+            PersonaEntry.COLUMN_APELLIDO,
+            PersonaEntry.COLUMN_FECHA_INSC,
+            PersonaEntry.COLUMN_STATUS
         )
 
-        db.close()
+        val selection = "${PersonaEntry.COLUMN_DNI} = ?"
+        val selectionArgs = arrayOf(dni.toString())
 
-        // El pago es exitoso si se insertó la cuota y se actualizó el estado del socio
-        return cuotaId != -1L && rowsAffected > 0
+        val cursor = db.query(
+            PersonaEntry.TABLE_NAME,
+            columns,
+            selection,
+            selectionArgs,
+            null, null, null
+        )
+
+        var datos: DatosCarnetSocio? = null
+        cursor.use {
+            if (it.moveToFirst()) {
+                val nombreIndex = it.getColumnIndex(PersonaEntry.COLUMN_NOMBRE)
+                val apellidoIndex = it.getColumnIndex(PersonaEntry.COLUMN_APELLIDO)
+                val fechaInscIndex = it.getColumnIndex(PersonaEntry.COLUMN_FECHA_INSC)
+                val statusIndex = it.getColumnIndex(PersonaEntry.COLUMN_STATUS)
+
+                // Asegurar que las columnas existen y crear el objeto
+                if (nombreIndex >= 0 && apellidoIndex >= 0 && fechaInscIndex >= 0 && statusIndex >= 0) {
+                    datos = DatosCarnetSocio(
+                        dni = dni,
+                        nombre = it.getString(nombreIndex),
+                        apellido = it.getString(apellidoIndex),
+                        fechaInscripcion = it.getString(fechaInscIndex),
+                        status = it.getInt(statusIndex)
+                    )
+                }
+            }
+        }
+        db.close()
+        return datos
     }
+
         // Aquí puedes agregar más funciones como insertarNuevoSocio, obtenerActividades, etc.
 }
 
