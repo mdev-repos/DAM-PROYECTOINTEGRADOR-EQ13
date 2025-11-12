@@ -40,6 +40,7 @@ class GestionNoSocActivity : AppCompatActivity() {
 
         // Encontrar los botones por su ID
         val btnPagarAct = findViewById<MaterialButton>(R.id.btnPagarAct)
+        val btnGenerarCarnetAct = findViewById<MaterialButton>(R.id.btnGenCarnet)
         val btnVolver = findViewById<MaterialButton>(R.id.btnVolver)
         val iconButton1 = findViewById<ImageButton>(R.id.IconButton1)
         val iconButton2 = findViewById<ImageButton>(R.id.IconButton2)
@@ -53,6 +54,11 @@ class GestionNoSocActivity : AppCompatActivity() {
             // Adjuntar el DNI al Intent
             intent.putExtra(CLAVE_DNI_USUARIO, dniParaPasar)
 
+            startActivity(intent)
+        }
+        btnGenerarCarnetAct.setOnClickListener {
+            val intent=Intent(this, EmitirCarnetActivity::class.java)
+            intent.putExtra(CLAVE_DNI_USUARIO, dniParaPasar)
             startActivity(intent)
         }
 

@@ -27,11 +27,11 @@ class GestionSocioActivity : AppCompatActivity() {
         val tvDniMostrar = findViewById<TextView>(R.id.tvLabelDniTxt)
 
         // Obtener el DNI que viene del Intent
-        val dniRecibido = intent.getIntExtra(CLAVE_DNI_USUARIO, -1)
-        val dniParaPasar = dniRecibido
+        val dniSocio = intent.getIntExtra(CLAVE_DNI_USUARIO, -1)
+        val dniParaPasar = dniSocio
 
-        if (dniRecibido != null) {
-            tvDniMostrar.text = dniRecibido.toString().trim()
+        if (dniSocio != null) {
+            tvDniMostrar.text = dniSocio.toString().trim()
             // A partir de aquí, puedes usar 'dniRecibido' en cualquier otra función
         } else {
             tvDniMostrar.text = "Error DNI"

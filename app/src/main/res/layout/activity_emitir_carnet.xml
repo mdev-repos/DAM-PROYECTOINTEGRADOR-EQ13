@@ -120,13 +120,12 @@
         app:layout_constraintTop_toTopOf="@+id/imageView4"
         app:srcCompat="@drawable/club_deportivo_logo" />
 
-    <EditText
+    <TextView
         android:id="@+id/editTextText"
         android:layout_width="93dp"
         android:layout_height="36dp"
         android:layout_marginTop="48dp"
         android:ems="10"
-        android:inputType="text"
         android:text="Tomar Foto"
         android:textColor="@android:color/black"
         android:textSize="16sp"
@@ -136,13 +135,12 @@
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
-    <EditText
-        android:id="@+id/editTextText2"
+    <TextView
+        android:id="@+id/tvNombreAp"
         android:layout_width="290dp"
         android:layout_height="24dp"
         android:layout_marginTop="12dp"
         android:ems="10"
-        android:inputType="text"
         android:padding="0dp"
         android:text="Nombre Registrado en Sistema"
         android:textColor="@android:color/white"
@@ -151,37 +149,51 @@
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-    <EditText
-        android:id="@+id/editTextText3"
-        android:layout_width="347dp"
+    <TextView
+        android:id="@+id/tvDni"
+        android:layout_width="120dp"
         android:layout_height="20dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="text"
         android:padding="0dp"
-        android:text="DNI Nº: 12345678                          CATEGORIA: No Socio"
+        android:text="DNI Nº: 12345678 "
         android:textAlignment="gravity"
         android:textColor="@android:color/white"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editTextText2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintStart_toStartOf="@+id/tvNombreAp"
+        app:layout_constraintTop_toBottomOf="@+id/tvNombreAp" />
 
-    <EditText
-        android:id="@+id/editTextText4"
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="173dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:text="CATEGORIA: No Socio"
+        android:padding="0dp"
+        android:textAlignment="gravity"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tvDni"
+        app:layout_constraintTop_toBottomOf="@+id/tvNombreAp" />
+
+    <TextView
+        android:id="@+id/tvFechaInsc"
         android:layout_width="170dp"
         android:layout_height="20sp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="text"
         android:padding="0dp"
         android:text="Fecha Inscrip.: dd/mm/aa"
         android:textAlignment="gravity"
         android:textColor="@android:color/white"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editTextText3"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintStart_toStartOf="@+id/tvDni"
+        app:layout_constraintTop_toBottomOf="@+id/tvDni" />
 
 
     <com.google.android.material.button.MaterialButton
