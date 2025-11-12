@@ -1,4 +1,4 @@
-package com.example.clubdeportivo13
+package com.example.clubdeportivo13.data
 
 object DatabaseClub {
 

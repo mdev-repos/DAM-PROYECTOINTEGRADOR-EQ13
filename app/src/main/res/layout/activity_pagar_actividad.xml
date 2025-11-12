@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".PagarActividadActivity">
+    tools:context=".ui.activities.PagarActividadActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

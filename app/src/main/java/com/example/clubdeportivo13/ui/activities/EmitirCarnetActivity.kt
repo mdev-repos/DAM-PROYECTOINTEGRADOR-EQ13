@@ -1,35 +1,30 @@
-package com.example.clubdeportivo13
+package com.example.clubdeportivo13.ui.activities
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-// ¡Importante! Añadir la clase correcta para el MaterialButton
+import com.example.clubdeportivo13.data.ClubDataSource
+import com.example.clubdeportivo13.data.Constants
+import com.example.clubdeportivo13.R
 import com.google.android.material.button.MaterialButton
 
 class EmitirCarnetActivity : AppCompatActivity() {
 
-    // 1. PROPIEDADES DE LA CLASE
     private lateinit var dataSource: ClubDataSource
-    private var dniSocio: Int? = -1 // Inicializar en -1
+    private var dniSocio: Int = -1
 
-    // 2. ELEMENTOS DE UI DEL CARNET
     private lateinit var tvSocioDni: TextView
     private lateinit var tvSocioNombreAp: TextView
     private lateinit var tvSocioFechaInsc: TextView
     private lateinit var tvSocioTipo: TextView
-
-    // 3. Constante para recibir el DNI
-    /*companion object {
-        // Asumimos "EXTRA_DNI" basado en el comentario en tu archivo original
-        const val CLAVE_DNI_USUARIO = "EXTRA_DNI"
-    }*/
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,114 +36,113 @@ class EmitirCarnetActivity : AppCompatActivity() {
             insets
         }
 
-        // --- INICIALIZACIÓN DE DATA SOURCE Y OBTENCIÓN DE DNI ---
         dataSource = ClubDataSource(this)
-        // Se obtiene el DNI que viene de la actividad anterior
-        dniSocio = intent.getIntExtra(CLAVE_DNI_USUARIO, -1)
+        dniSocio = intent.getIntExtra(Constants.CLAVE_DNI_USUARIO, -1)
 
-        // --- INICIALIZAR VISTAS DEL CARNET ---
         tvSocioDni = findViewById(R.id.tvDni)
         tvSocioNombreAp = findViewById(R.id.tvNombreAp)
         tvSocioFechaInsc = findViewById(R.id.tvFechaInsc)
         tvSocioTipo = findViewById(R.id.tvSocioTipo)
 
-        // --- CARGAR DATOS ---
-        // CORRECCIÓN 3: Comprobar contra -1, no contra null
         if (dniSocio != -1) {
-            cargarDatosCarnet(dniSocio!!)
-
+            cargarDatosCarnet(dniSocio)
         } else {
             Toast.makeText(
                 this,
                 "Error: DNI del socio no encontrado. Vuelva a intentar.",
                 Toast.LENGTH_LONG
             ).show()
-            finish() // Cerramos la actividad si no hay DNI
+            finish()
         }
 
-
-        // --- LISTENERS DE BOTONES ---
-
-        // CORRECCIÓN 1: Estos son MaterialButton, no ImageButton
         val btnImprimir = findViewById<MaterialButton>(R.id.btnImprimir)
         val btnCancelar = findViewById<MaterialButton>(R.id.btnCancelar)
-
-        // Estos sí son ImageButton
         val iconButton1 = findViewById<ImageButton>(R.id.IconButton1)
         val iconButton2 = findViewById<ImageButton>(R.id.IconButton2)
         val iconButton3 = findViewById<ImageButton>(R.id.IconButton3)
 
-        // Boton Imprimir: Muestra mensaje y vuelve a GestionUsuarios
         btnImprimir.setOnClickListener {
             Toast.makeText(
                 this,
-                "Carnet del socio DNI ${dniSocio ?: "N/A"} impreso con éxito.",
+                "Carnet del socio DNI $dniSocio impreso con éxito.",
                 Toast.LENGTH_LONG
             ).show()
 
-            // NAVEGACIÓN (Tu Petición): Volver a GestionUsuarios
-            // Asumiendo que tu archivo gestionusuarios.kt define la clase GestionUsuariosActivity
-            val intent = Intent(this, GestionUsuariosActivity::class.java)
-            // Estas flags limpian la pila y te llevan a la instancia existente o una nueva de GestionUsuarios
+            val tipoPersona = dataSource.getTipoByDni(dniSocio)
+            val intent = when (tipoPersona) {
+                1 -> Intent(this, GestionSocioActivity::class.java)  // Socio
+                0 -> Intent(this, GestionNoSocActivity::class.java)  // No Socio
+                else -> Intent(this, GestionUsuariosActivity::class.java) // Por defecto
+            }
+            intent.putExtra(Constants.CLAVE_DNI_USUARIO, dniSocio)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
-            finish() // Cierra esta actividad
-        }
-
-        // Botón Cancelar / Atrás (vuelve a la ventana anterior)
-        btnCancelar.setOnClickListener { finish() }
-        iconButton3.setOnClickListener { finish() }
-
-        // Botón de Salir (Cerrar sesión)
-        iconButton1.setOnClickListener {
-            val intent = Intent(
-                this,
-                PrincipalActivity::class.java
-            )
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
         }
 
-        // Botón de Inicio (Home)
-        iconButton2.setOnClickListener {
-            val intent = Intent(this, PrincipalActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
+        btnCancelar.setOnClickListener {
+            finish()
         }
 
+        iconButton1.setOnClickListener {
+            confirmarCerrarSesion()
+        }
+
+        iconButton2.setOnClickListener {
+            irAPrincipal()
+        }
+
+        iconButton3.setOnClickListener {
+            finish()
+        }
+
+        onBackPressedDispatcher.addCallback(this) {
+            finish()
+        }
     }
 
     /**
-     * Función que consulta la base de datos y rellena los TextViews del carnet, compaginando datos.
-     * (Se mantiene la lógica original de 'status' según tu instrucción)
+     * Función que consulta la base de datos y rellena los TextViews del carnet
      */
     private fun cargarDatosCarnet(dni: Int) {
-        // Asumiendo que ClubDataSource.getDatosSocioParaCarnet ya fue agregado y es correcto.
         val datos = dataSource.getDatosParaCarnet(dni)
 
         if (datos != null) {
-            // Rellenar los campos del carnet
-
-            // 1. DNI
             tvSocioDni.text = "DNI Nº ${datos.dni}"
 
-            // 2. Compaginación: Apellido y Nombre
             val nombreCompaginado = "${datos.apellido}, ${datos.nombre}"
             tvSocioNombreAp.text = nombreCompaginado
 
-            // 3. Fecha Inscripción
             tvSocioFechaInsc.text = "F. Inscripción: ${datos.fechaInscripcion}"
 
-            // 4. Estado (Status) - Se mantiene la lógica que tenías
-            // PEQUEÑA MEJORA: Se añade el prefijo "CATEGORIA: " para coincidir con el XML
             val tipoText = if (datos.tipo == 0) "No Socio" else "Socio"
             tvSocioTipo.text = "CATEGORIA: $tipoText"
-
         } else {
             Toast.makeText(this, "Socio con DNI $dni no encontrado.", Toast.LENGTH_LONG).show()
-            finish() // Si no encontramos al socio, mejor cerramos la ventana
+            finish()
         }
     }
 
+    private fun irAPrincipal() {
+        val intent = Intent(this, PrincipalActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
+    }
+
+    private fun confirmarCerrarSesion() {
+        AlertDialog.Builder(this)
+            .setTitle("Cerrar Sesión")
+            .setMessage("¿Estás seguro?")
+            .setPositiveButton("Sí") { dialog, which ->
+                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                prefs.edit().putBoolean("is_logged_in", false).apply()
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
 }

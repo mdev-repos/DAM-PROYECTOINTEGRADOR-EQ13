@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context=".GestionNoRegActivity">
+    tools:context=".ui.activities.GestionNoRegActivity">
 
 
     <ImageView

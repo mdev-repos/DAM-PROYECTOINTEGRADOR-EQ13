@@ -1,18 +1,20 @@
-package com.example.clubdeportivo13
+package com.example.clubdeportivo13.ui.activities
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.clubdeportivo13.data.Constants
+import com.example.clubdeportivo13.R
 import com.google.android.material.button.MaterialButton
 
 class GestionSocioActivity : AppCompatActivity() {
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,18 +28,15 @@ class GestionSocioActivity : AppCompatActivity() {
 
         val tvDniMostrar = findViewById<TextView>(R.id.tvLabelDniTxt)
 
-        // Obtener el DNI que viene del Intent
-        val dniSocio = intent.getIntExtra(CLAVE_DNI_USUARIO, -1)
+        val dniSocio = intent.getIntExtra(Constants.CLAVE_DNI_USUARIO, -1)
         val dniParaPasar = dniSocio
 
-        if (dniSocio != null) {
+        if (dniSocio != -1) {
             tvDniMostrar.text = dniSocio.toString().trim()
-            // A partir de aquí, puedes usar 'dniRecibido' en cualquier otra función
         } else {
             tvDniMostrar.text = "Error DNI"
         }
 
-        // Encontrar los botones por su ID
         val btnPagarCuota = findViewById<MaterialButton>(R.id.btnPagarAct)
         val btnGenCarnet = findViewById<MaterialButton>(R.id.btnGenCarnet)
         val btnVolver = findViewById<MaterialButton>(R.id.btnVolver)
@@ -45,49 +44,59 @@ class GestionSocioActivity : AppCompatActivity() {
         val iconButton2 = findViewById<ImageButton>(R.id.IconButton2)
         val iconButton3 = findViewById<ImageButton>(R.id.IconButton3)
 
-        // Asignar listeners para manejar los clics
         btnPagarCuota.setOnClickListener {
             val intent = Intent(this, PagarCuotaActivity::class.java)
-
-            // Adjuntar el DNI al Intent
-            intent.putExtra(CLAVE_DNI_USUARIO, dniParaPasar)
-
+            intent.putExtra(Constants.CLAVE_DNI_USUARIO, dniParaPasar)
             startActivity(intent)
         }
 
         btnGenCarnet.setOnClickListener {
             val intent = Intent(this, EmitirCarnetActivity::class.java)
-
-            // Adjuntar el DNI al Intent
-            intent.putExtra(CLAVE_DNI_USUARIO, dniParaPasar)
-
+            intent.putExtra(Constants.CLAVE_DNI_USUARIO, dniParaPasar)
             startActivity(intent)
         }
 
-        // Botón Volver
         btnVolver.setOnClickListener {
-            val intent = Intent(this, GestionUsuariosActivity::class.java)
-            startActivity(intent)
+            irAPrincipal()
         }
 
-        // Botón de Salir (Cerrar sesión)
         iconButton1.setOnClickListener {
-            val intent = Intent(this, PrincipalActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
+            confirmarCerrarSesion()
         }
 
-        // Botón de Inicio (Home)
         iconButton2.setOnClickListener {
-            val intent = Intent(this, PrincipalActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
+            irAPrincipal()
         }
 
-        // Botón de Atrás
         iconButton3.setOnClickListener {
-            finish() // Cierra la actividad actual y vuelve a la anterior
+            onBackPressedDispatcher.onBackPressed()
         }
+
+        onBackPressedDispatcher.addCallback(this) {
+            irAPrincipal()
+        }
+    }
+
+    private fun irAPrincipal() {
+        val intent = Intent(this, PrincipalActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
+    }
+
+    private fun confirmarCerrarSesion() {
+        AlertDialog.Builder(this)
+            .setTitle("Cerrar Sesión")
+            .setMessage("¿Estás seguro?")
+            .setPositiveButton("Sí") { dialog, which ->
+                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                prefs.edit().putBoolean("is_logged_in", false).apply()
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
     }
 }
