@@ -10,13 +10,21 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.clubdeportivo13.R
+import android.util.Log
+import com.example.clubdeportivo13.data.ClubDataSource
+
 
 class PrincipalActivity : AppCompatActivity() {
+    private val dataSource: ClubDataSource by lazy {
+        ClubDataSource(this)
+    }
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_principal)
+
+        ejecutarActualizacionMorosidad()
 
         val btnGestionUsuarios = findViewById<Button>(R.id.btnGestionUsuarios)
         val btnMorososHoy = findViewById<Button>(R.id.btnMorososHoy)
@@ -78,5 +86,14 @@ class PrincipalActivity : AppCompatActivity() {
             }
             .setNegativeButton("Cancelar", null)
             .show()
+    }
+
+    private fun ejecutarActualizacionMorosidad() {
+        try {
+            dataSource.actualizarStatusMorosos()
+             Log.i("ACTIVITY_UPDATE", "Se ha iniciado y completado la verificación de morosos.")
+        } catch (e: Exception) {
+            Log.e("ACTIVITY_UPDATE_ERROR", "Fallo al llamar a la función de morosidad.", e)
+        }
     }
 }
