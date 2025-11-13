@@ -5,6 +5,8 @@ import android.content.ContentValues
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import android.database.sqlite.SQLiteDatabase
+import android.util.Log
 
 
 class ClubDataSource(context: Context) {
@@ -132,7 +134,7 @@ class ClubDataSource(context: Context) {
 
         val query = "SELECT $colId, $colDesc, $colPrecio, $colFecha " +
                 "FROM $table " +
-                "WHERE $colDesc = ?"
+                "WHERE $colDesc = ? AND date($colFecha) >= date('now', 'localtime')"
 
         val selectionArgs = arrayOf(descripcion)
 
@@ -163,16 +165,7 @@ class ClubDataSource(context: Context) {
         return detalles
     }
 
-    /**
-     * Registra el pago de una actividad en la tabla PAGOACTIVIDADES.
-     * @param idActividad El ID de la actividad pagada.
-     * @param dniSocio El DNI de la persona que realiza el pago.
-     * @param montoPagado El monto total pagado.
-     * @param metodoPago El método de pago utilizado ('Contado', 'Tarjeta', etc.).
-     * @param fechaPago La fecha en formato de texto (YYYY-MM-DD).
-     * @return true si la inserción fue exitosa, false en caso contrario.
-     */
-    fun pagarActividad(pago: PagoActividad): Boolean {
+        fun pagarActividad(pago: PagoActividad): Boolean {
 
         val db = dbHelper.writableDatabase
 
@@ -299,6 +292,43 @@ class ClubDataSource(context: Context) {
     private fun obtenerFechaActual(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return sdf.format(Date())
+    }
+
+    fun actualizarStatusMorosos() {
+        val db: SQLiteDatabase = dbHelper.writableDatabase
+
+        val TABLE_PERSONA = DatabaseClub.PersonaEntry.TABLE_NAME
+        val COL_DNI_PERSONA = DatabaseClub.PersonaEntry.COLUMN_DNI
+        val COL_STATUS = DatabaseClub.PersonaEntry.COLUMN_STATUS
+        val COL_TIPO = DatabaseClub.PersonaEntry.COLUMN_TIPO
+
+        val TABLE_CUOTA = DatabaseClub.CuotaEntry.TABLE_NAME
+        val COL_DNI_CUOTA = DatabaseClub.CuotaEntry.COLUMN_SOCIO_DNI
+        val COL_FECHA_VENC = DatabaseClub.CuotaEntry.COLUMN_FECHA_VENC
+
+        val sqlQuery = """
+            UPDATE $TABLE_PERSONA SET status = 1 
+WHERE $COL_DNI_PERSONA NOT IN (
+    SELECT $COL_DNI_CUOTA FROM $TABLE_CUOTA 
+    WHERE date($COL_FECHA_VENC) >= date('now', 'localtime') 
+)
+AND $COL_TIPO = 1 AND $COL_STATUS = 0;
+        """.trimIndent()
+
+
+        try {
+                    db.beginTransaction()
+
+                    db.execSQL(sqlQuery)
+            db.setTransactionSuccessful()
+            Log.d("DB_UPDATE", "Actualización de morosos finalizada.")
+
+        } catch (e: Exception) {
+            Log.e("DB_UPDATE_ERROR", "Error al ejecutar SQL directo de morosidad", e)
+        } finally {
+            db.endTransaction()
+            db.close()
+        }
     }
 }
 

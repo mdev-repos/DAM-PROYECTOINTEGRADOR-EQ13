@@ -121,7 +121,7 @@ class PagarCuotaActivity : AppCompatActivity() {
     }
 
     private fun setupMetodoPagoDropdown() {
-        val metodos = arrayOf("Contado", "Tarjeta de Crédito", "Transferencia")
+        val metodos = arrayOf("Contado", "1 cuota", "2 cuotas", "3 cuotas")
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, metodos)
         dropdownMetodoPago.setAdapter(adapter)
 
