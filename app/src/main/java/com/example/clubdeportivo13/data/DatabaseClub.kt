@@ -6,7 +6,7 @@ object DatabaseClub {
     // Configuración general de la DB
     // ------------------
     const val DATABASE_NAME = "club_deportivo.db"
-    const val DATABASE_VERSION = 2
+    const val DATABASE_VERSION = 1
 
     // ------------------
     // Tabla PERSONA
