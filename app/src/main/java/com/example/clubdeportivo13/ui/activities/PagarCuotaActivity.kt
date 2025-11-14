@@ -168,9 +168,9 @@ class PagarCuotaActivity : AppCompatActivity() {
 
             if (dataSource.pagarCuota(pago)) {
                 val mensaje = if (esNuevoCliente) {
-                    "✅ Nuevo socio registrado y cuota pagada exitosamente!\nSocio: ${nuevoCliente!!.nombre} ${nuevoCliente!!.apellido}\nDNI: $dni"
+                    "✅ Nuevo socio registrado y cuota pagada exitosamente!\n\nSocio: ${nuevoCliente!!.nombre} ${nuevoCliente!!.apellido}\nDNI: $dni"
                 } else {
-                    "✅ Cuota pagada exitosamente!\nDNI: $dni"
+                    "✅ Cuota pagada exitosamente!\n\nDNI: $dni"
                 }
 
                 AlertDialog.Builder(this)
