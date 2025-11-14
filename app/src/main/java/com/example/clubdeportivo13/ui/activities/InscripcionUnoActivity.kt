@@ -14,6 +14,7 @@ import android.widget.TextView
 import java.util.Calendar
 import android.app.DatePickerDialog
 import com.example.clubdeportivo13.data.ClubDataSource
+import com.example.clubdeportivo13.data.Constants
 import com.example.clubdeportivo13.R
 
 class InscripcionUnoActivity : AppCompatActivity() {
@@ -39,6 +40,14 @@ class InscripcionUnoActivity : AppCompatActivity() {
         etApellido = findViewById(R.id.apellidoTxt)
         etNombre = findViewById(R.id.nombreTxt)
         etDireccion = findViewById(R.id.direccionTxt)
+
+        val dniRecibido = intent.getIntExtra(Constants.CLAVE_DNI_USUARIO, -1)
+        if (dniRecibido != -1) {
+            etDni.setText(dniRecibido.toString())
+            etDni.isEnabled = false
+            etDni.setBackgroundColor(resources.getColor(android.R.color.transparent))
+            hayDatosIngresados = true
+        }
 
         etDni.setOnKeyListener { _, _, _ ->
             hayDatosIngresados = true
@@ -167,6 +176,14 @@ class InscripcionUnoActivity : AppCompatActivity() {
     }
 
     private fun recuperarDatosSiExisten() {
+        val dniRecibido = intent.getIntExtra(Constants.CLAVE_DNI_USUARIO, -1)
+        if (dniRecibido != -1) {
+            etDni.setText(dniRecibido.toString())
+            etDni.isEnabled = false
+            etDni.setBackgroundColor(resources.getColor(android.R.color.transparent))
+            hayDatosIngresados = true
+        }
+
         val dni = intent.getIntExtra("dni", 0)
         val apellido = intent.getStringExtra("apellido") ?: ""
         val nombre = intent.getStringExtra("nombre") ?: ""
@@ -175,6 +192,8 @@ class InscripcionUnoActivity : AppCompatActivity() {
 
         if (dni != 0) {
             etDni.setText(dni.toString())
+            etDni.isEnabled = false
+            etDni.setBackgroundColor(resources.getColor(android.R.color.transparent))
             hayDatosIngresados = true
         }
         if (apellido.isNotEmpty()) {
