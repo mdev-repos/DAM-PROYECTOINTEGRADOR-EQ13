@@ -35,6 +35,9 @@ class GestionNoRegActivity : AppCompatActivity() {
 
         btnRegistrar.setOnClickListener {
             val intent = Intent(this, InscripcionUnoActivity::class.java)
+            if (dniRecibido != -1) {
+                intent.putExtra(Constants.CLAVE_DNI_USUARIO, dniRecibido)
+            }
             startActivity(intent)
         }
 

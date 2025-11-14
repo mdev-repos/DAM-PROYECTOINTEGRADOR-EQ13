@@ -13,6 +13,7 @@ import android.widget.Toast
 import android.widget.EditText
 import android.widget.CheckBox
 import com.example.clubdeportivo13.data.ClubDataSource
+import com.example.clubdeportivo13.data.Constants
 import com.example.clubdeportivo13.data.NuevoCliente
 import com.example.clubdeportivo13.R
 
@@ -133,6 +134,7 @@ class InscripcionDosActivity : AppCompatActivity() {
             putExtra("telefono", etTelefono.text.toString())
             putExtra("telUrgencia", etTelUrgencia.text.toString())
             putExtra("fichaMedica", cbFichaMedica.isChecked)
+            putExtra(Constants.CLAVE_DNI_USUARIO, dni)
         }
         startActivity(intent)
         finish()
