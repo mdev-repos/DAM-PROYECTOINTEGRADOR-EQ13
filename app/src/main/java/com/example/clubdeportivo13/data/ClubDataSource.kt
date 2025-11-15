@@ -2,11 +2,14 @@ package com.example.clubdeportivo13.data
 
 import android.content.Context
 import android.content.ContentValues
+import android.content.Intent
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.clubdeportivo13.ui.activities.PrincipalActivity
 
 
 class ClubDataSource(context: Context) {
@@ -330,5 +333,26 @@ AND $COL_TIPO = 1 AND $COL_STATUS = 0;
             db.close()
         }
     }
+
+    fun validarUsuario(user: String, password: String): Boolean{
+        val db = dbHelper.readableDatabase
+
+
+        val TABLA_USUARIO = DatabaseClub.UsuariosEntry.TABLE_NAME
+        val COLUMNA_USER = DatabaseClub.UsuariosEntry.COLUMN_USER
+        val COLUMNA_PASSWORD = DatabaseClub.UsuariosEntry.COLUMN_PASSWORD
+
+        val query = "SELECT * FROM $TABLA_USUARIO WHERE $COLUMNA_USER = ? AND $COLUMNA_PASSWORD = ?"
+        val selectionArgs = arrayOf(user, password)
+
+        val cursor = db.rawQuery(query, selectionArgs)
+
+        val accesoValido = cursor.count > 0
+        cursor.close()
+        db.close()
+
+        return accesoValido
+    }
+
 }
 

@@ -1,6 +1,14 @@
 package com.example.clubdeportivo13.data
 import java.io.Serializable
 
+
+//Usuario
+data class Usuario(
+    val id: Int,
+    val user: String,
+    val password: String
+)
+
 //Usuarios morosos
 data class PersonaMorosa(
     val dni: Int,

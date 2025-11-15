@@ -18,8 +18,12 @@
             db.execSQL(DatabaseClub.ActividadesEntry.SQL_CREATE_ACTIVIDADES)
             db.execSQL(DatabaseClub.CuotaEntry.SQL_CREATE_CUOTA)
             db.execSQL(DatabaseClub.PagoActividadesEntry.SQL_CREATE_PAGOACTIVIDADES)
+            db.execSQL(DatabaseClub.UsuariosEntry.SQL_CREATE_USUARIOS)
 
             // 2. INSERCIÓN DE DATOS SIMULADOS
+
+            // 2.0. USUARIO (1 registro)
+            db.execSQL(DatabaseClub.UsuariosEntry.SQL_INSERT_U1)
 
             // 2.1. PERSONA (10 registros)
             db.execSQL(DatabaseClub.PersonaEntry.SQL_INSERT_P1)
@@ -74,6 +78,7 @@
             db.execSQL("DROP TABLE IF EXISTS ${DatabaseClub.CuotaEntry.TABLE_NAME}")
             db.execSQL("DROP TABLE IF EXISTS ${DatabaseClub.ActividadesEntry.TABLE_NAME}")
             db.execSQL("DROP TABLE IF EXISTS ${DatabaseClub.PersonaEntry.TABLE_NAME}")
+            db.execSQL("DROP TABLE IF EXISTS ${DatabaseClub.UsuariosEntry.TABLE_NAME}")
             onCreate(db)
         }
 
