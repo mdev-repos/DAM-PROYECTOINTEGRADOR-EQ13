@@ -47,6 +47,8 @@
         android:padding="12dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
         android:hint="DNI [Muestra DNI ingresado usuario NO Reg]"
         android:inputType="text"
         tools:ignore="HardcodedText"
