@@ -1,12 +1,40 @@
 package com.example.clubdeportivo13.data
 
+import com.example.clubdeportivo13.data.DatabaseClub.PersonaEntry.COLUMN_DNI
+
 object DatabaseClub {
 
     // ------------------
     // Configuración general de la DB
     // ------------------
     const val DATABASE_NAME = "club_deportivo.db"
-    const val DATABASE_VERSION = 2
+    const val DATABASE_VERSION = 3
+
+    // ------------------
+    // Tabla USUARIOS
+    // ------------------
+
+    object UsuariosEntry {
+        const val TABLE_NAME = "USUARIOS"
+
+        // Columnas
+        const val COLUMN_ID = "id"
+        const val COLUMN_USER = "user"
+        const val COLUMN_PASSWORD = "password"
+
+        // Query SQL de creación de USUARIOS
+
+        const val SQL_CREATE_USUARIOS =
+            "CREATE TABLE $TABLE_NAME(" +
+                    "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "$COLUMN_USER TEXT NOT NULL UNIQUE," +
+                    "$COLUMN_PASSWORD TEXT NOT NULL" +
+                    ")"
+
+        // U1 Usuario único para demostración de la app
+        const val SQL_INSERT_U1 =
+            "INSERT INTO ${UsuariosEntry.TABLE_NAME} (id, user, password) VALUES (1, 'admin', '1234');"
+    }
 
     // ------------------
     // Tabla PERSONA
